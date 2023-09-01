@@ -32,7 +32,7 @@ sections:
       tag: ""
     offset: 0
     order: desc
-    subtitle: ""
+    subtitle: In this section, I will provide some data analyses, tutorials, and fun R stuff.
     text: ""
     title: Posts
   design:
