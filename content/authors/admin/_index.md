@@ -3,31 +3,34 @@ bio: My research interests include distributed robotics, mobile computing and pr
   matter.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
-first_name: Alice
+  - course: PhD in Criminological Sciences
+    institution: KU Leuven
+    year: 2023
+  - course: PhD in Psychology and Cognitive Neuroscience
+    institution: Maastricht University
+    year: 2023
+  - course: M.Sc in Brain and Cognition
+    institution: Pompeu Fabra University
+    year: 2017
+  - course: B.A. in Psychology
+    institution: Grand View University
+    year: 2016
+email: "paul.riesthuis@kuleuven.be"
+first_name: Paul
 highlight_name: true
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
-last_name: Wu
+- Statistics
+- The effects of lying on memory
+- Illusory Truth Effect
+last_name: Riesthuis
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: KU Leuven
+  url: https://www.kuleuven.be/
+role: Post Doctoral Researcher
 social:
 - icon: envelope
   icon_pack: fas
-  link: /#contact
+  link: paul.riesthuis@kuleuven.be
 - display:
     header: true
   icon: twitter
@@ -39,18 +42,18 @@ social:
   link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/PaulRiesthuis
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://www.linkedin.com/in/paul-riesthuis-631323224/
 - icon: cv
   icon_pack: ai
   link: uploads/resume.pdf
 status:
   icon: ☕️
 superuser: true
-title: Alice Wu 吳恩達
+title: Paul Riesthuis
 ---
 
-Alice Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Paul Riesthuis is a post doctoral researcher at the faculty of Law and Criminology at KU Leuven. His research interests include statistics, memory, and the illusory truth effect. His post doctoral research (funded by FWO) focuses on how to improve the practical inferences of eyewitness memory research. 
 {style="text-align: justify;"}
