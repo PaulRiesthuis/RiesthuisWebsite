@@ -12,6 +12,10 @@ sections:
       featured_only: true
       folders:
       - publication
+    text: |-
+      {{% callout note %}}
+      See all [publications](./publication/) here.
+      {{% /callout %}}
     title: Featured Publication
   design:
     columns: "2"
@@ -44,20 +48,6 @@ sections:
     flip_alt_rows: false
     view: showcase
   id: projects
-- block: collection
-  content:
-    filters:
-      exclude_featured: true
-      folders:
-      - publication
-    text: |-
-      {{% callout note %}}
-      Quickly discover relevant content by [filtering publications](./publication/).
-      {{% /callout %}}
-    title: Recent Publications
-  design:
-    columns: "2"
-    view: citation
 - block: collection
   content:
     filters:
