@@ -15,6 +15,18 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
+output:
+    html_document:     
+    fig_width: 10
+    fig_height: 8
+    df_print: paged
+    code_folding: hide
+    theme: flatly
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
 ---
 
 ```{css sidenote, echo = FALSE}
