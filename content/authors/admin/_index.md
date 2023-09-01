@@ -1,6 +1,5 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My research interests include statistics, memory, and the illusory truth effect.
 education:
   courses:
   - course: PhD in Criminological Sciences
@@ -36,10 +35,13 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
+  link: https://twitter.com/PaulRiesthuis
+- icon: researchgate
+  icon_pack: fab
+  link: https://www.researchgate.net/profile/Paul-Riesthuis-2 
 - icon: graduation-cap
   icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://scholar.google.be/citations?user=5gVs6QMAAAAJ&hl=nl&oi=ao
 - icon: github
   icon_pack: fab
   link: https://github.com/PaulRiesthuis
