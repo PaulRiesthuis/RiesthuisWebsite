@@ -12,7 +12,7 @@ authors:
 - Henry Otgaar
 #date: "2023-06-01T00:00:00Z"
 doi: "https://doi.org/10.1016/j.newideapsych.2022.100966"
-featured: true
+featured: false
 projects: []
 publication: '*New Ideas in Psychology*'
 publication_short: ""

@@ -11,7 +11,7 @@ authors:
 - Ivan Mangiulli
 - Charlotte Bücken
 #date: "2023-06-01T00:00:00Z"
-featured: true
+featured: false
 projects: []
 publication: '*Psychology, Crime, and Law*'
 publication_short: ""

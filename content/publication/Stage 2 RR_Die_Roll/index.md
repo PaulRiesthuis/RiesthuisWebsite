@@ -12,7 +12,7 @@ authors:
 - Ivan Mangiulli
 #date: "2023-06-01T00:00:00Z"
 doi: "https://doi.org/10.1002/acp.3986"
-featured: true
+featured: false
 projects: []
 publication: '*Applied Cognitive Psychology*'
 publication_short: ""
