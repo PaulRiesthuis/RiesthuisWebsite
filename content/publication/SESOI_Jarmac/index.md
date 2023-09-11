@@ -1,31 +1,23 @@
 ---
-abstract: In this commentary, we argue that besides focusing on generalization, sufficient attention must be invested in the practical relevance of psychological and applied memory research. That is, memory research is frequently used to address real life questions. In the area of psychology and law, memory scientists are sometimes asked by court to provide expert opinion about, for example, the validity of witness testimony. When doing so, they refer to applied memory research to support their conclusion on whether or not a statement is valid. But when can applied memory research meaningfully inform legal cases? Memory scientists can best know the practical relevance of research by considering the smallest effect size of interest in a given domain. Applied memory research has generally failed to consider the importance of the smallest effect size of interest and instead relies uncritically on benchmarks of effect sizes (e.g., small, medium, large). We demonstrate how memory scientists can set the smallest effect size of interest, and we provide an example in the area of false memory. We argue that psychological science can best contribute to law when memory scientists make use of the smallest effect size of interest.
-author_notes:
-- Equal contribution
-- Equal contribution
-- Equal contribution
-- Equal contribution
-- Equal contribution
-- Equal contribution
+abstract: "Memory experts are sometimes asked to evaluate the validity of accounts of witnesses, victims, or suspects. In some of these cases, they are asked what effect alcohol has on the validity of such accounts. In this article, we offer a guide on what expert witnesses can reliably say about how alcohol affects memory. We do so by resorting to effect sizes from previous studies and meta-analytic work, and address this novel question: Are these effect sizes meaningful in legal cases? More specifically, we argue that any determination of whether individual studies about alcohol and memory are practically relevant for legal cases, scientists must focus on the smallest effect size of interest. We make the case that a decrease or increase of only 1 detail, especially an incorrect detail, should be regarded as the smallest effect size of interest in this line of research. In line with this idea, we show that effect sizes in the alcohol and memory literature are often larger than this smallest effect size of interest. This finding is important because it implies that alcohol often exerts a practically relevant and meaningful detrimental effect on the reporting of both correct and incorrect details, which in turn negatively affects the validity of witness testimony."
 authors:
 - Henry Otgaar
 - admin
-- Tess Neal
-- Jason Chin
-- Irena Boskovic
-- Eric Rassin
+- Johannes G. Ramaekers
+- Maryanne Garry
+- Lilian Kloft
 # date: "2023-06-01T00:00:00Z"
-doi: "https://doi.org/10.1037/mac0000116"
+doi: "https://doi.org/10.3389/fpsyg.2022.980533"
 featured: false
 projects: []
-publication: '*Journal of Applied Research in Memory and Cognition*'
+publication: '*Frontiers in Psychology*'
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2023-06-01T00:00:00Z"
+publishDate: "2022-11-01T00:00:00Z"
 tags:
 - Source Themes
-title: "If Generalization is the Grail, Practical Relevance is the Nirvana: Considerations from the Contribution of Psychological Science of Memory to Law"
+title: "The importance of the smallest effect size of interest in expert witness testimony on alcohol and memory"
 
 ---
 
