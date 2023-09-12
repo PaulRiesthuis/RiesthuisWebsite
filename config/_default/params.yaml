@@ -8,7 +8,7 @@
 appearance:
   theme_day: minimal
   theme_night: minimal
-  font: minimal
+  font: cyberpunk
   font_size: L
 
 # SEO
@@ -114,3 +114,7 @@ extensions:
 security:
   # Allow frame for embedding speaker notes in slides
   allow_frame: true
+  
+
+# Custom CSS
+customCSS: [["scss/custom.css"]] ## Adding extra scss files

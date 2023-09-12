@@ -48,9 +48,6 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/in/paul-riesthuis-631323224/
-- icon: cv
-  icon_pack: ai
-  link: uploads/resume.pdf
 status:
   icon: ☕️
 superuser: true
