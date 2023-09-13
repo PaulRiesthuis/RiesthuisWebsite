@@ -65,37 +65,6 @@ sections:
     columns: "2"
     view: compact
   id: talks
-- block: experience
-  content:
-    title: CV
-    subtitle: Experience
-    items:
-      - title: CEO
-        company: GenCoin
-        company_url: ''
-        company_logo: org-gc
-        location: California
-        date_start: '2021-01-01'
-        date_end: ''
-        description: |2-
-            Responsibilities include:
-        
-            * Analysing
-            * Modelling
-            * Deploying
-      - title: Professor of Semiconductor Physics
-        company: University X
-        company_url: ''
-        company_logo: org-x
-        location: California
-        date_start: '2016-01-01'
-        date_end: '2020-12-31'
-        description: Taught electronic engineering and researched semiconductor physics.
-    design:
-      # Choose how many columns the section has. Valid values: '1' or '2'.
-      columns: '2'
-    subtitle: Experience
-  id: experience
 title: null
 type: landing
 ---
