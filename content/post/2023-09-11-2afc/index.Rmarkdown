@@ -1,0 +1,91 @@
+---
+title: "2AFC Memory Task Data Analysis"
+author: 'Paul Riesthuis'
+authors: [Paul Riesthuis]
+slug: 2AFC-Memory-Task-Data-Analysis
+categories: []
+tags: []
+subtitle: ''
+summary: 'In this post, I will show the possible statistical analyses possible with a 2 alternative forced choice task in a typical memory experiment.'
+lastmod: '2023-09-11T16:22:26+02:00'
+date: "2023-09-13"
+projects: []
+output: 
+  html_document:
+    theme: journal
+    code_folding: hide
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(pROC)
+```
+
+
+---
+
+## 2AFC Memory Task
+
+---
+
+  - In this memory task there are two possible outcomes: 
+    - hit     =     recognizing studied item
+    - FA      =     recognizing non studied item
+    
+  - Let's create a dataset for this memory task with 30 questions (Which of the following two words did you see? responses: old item or new item)
+```{r}
+# Create variable.
+participants <- seq(1,100,1) # This creates a column with 100 participants
+hit   <- c(round(c(rnorm(100,20,2.5))))#  this creates a random number of hits that are normally distributed with a mean of 20 and standard deviation of 2.5
+FA    <- 30-hit # this create a column with the false alarm rates. 
+#put together in dataframe(df)
+df <- data.frame(participants, hit,FA)
+head(df) #  to show the first 5 participants
+```
+
+- We can quickly check whether the data frame is correct.
+
+```{r}
+mean_hit <- mean(hit)
+sd_hit <- sd(hit)
+mean_fa <- mean(FA)
+sd_fa <- sd(FA)
+print(paste("The mean for hit is", mean_hit, "with a standard deviation of", format(round(sd_hit,2)),". The mean for false alarms is", mean_fa, "with a standard deviation of", format(round(sd_fa,2)),"."),quote=FALSE)
+```
+
+---
+
+### Analyzable Statistics
+
+---
+
+- Hit rate (HT)           - Rate correctly identified as an old item out of all items 
+
+```{r, comment=NA}
+hit_rate <- df$hit/(df$hit+df$FA) # this will give the hit rate for each participant
+cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mean turns the hit rate into the mean for the group
+```
+
+  
+  
+- False Alarm Rate (FAR)  - Rate of choosing the new item out of all items
+
+```{r, comment=NA}
+FA_rate <- df$FA/(df$hit+df$FA) # this will give the FA rate for each participant
+cat(paste("The false alarm rate is",format(round(mean(FA_rate),2))))
+```
+ 
+
+- Corrected hit rate 
+
+It is possible to calculate a corrected hit rate. However, this depends on several assumptions. For more information [See supplementary Information of Brady et al., 2008](
+https://doi.org/10.1073/pnas.0803390105)
+
+- Sensitivity d'
+
+It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
+
+---
