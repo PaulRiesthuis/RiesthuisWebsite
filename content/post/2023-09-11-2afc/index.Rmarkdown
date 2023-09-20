@@ -7,7 +7,7 @@ categories: []
 tags: []
 subtitle: ''
 summary: 'In this post, I will show the possible statistical analyses possible with a 2 alternative forced choice task in a typical memory experiment.'
-lastmod: '2023-09-11T16:22:26+02:00'
+lastmod: '2023-09-20T16:22:26+02:00'
 date: "2023-09-13"
 projects: []
 output: 
