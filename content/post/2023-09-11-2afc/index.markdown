@@ -35,6 +35,7 @@ output:
 
 ```r
 # Create variable.
+set.seed(2794) #  this is too make sure the results stay the same.
 participants <- seq(1,100,1) # This creates a column with 100 participants
 hit   <- c(round(c(rnorm(100,20,2.5))))#  this creates a random number of hits that are normally distributed with a mean of 20 and standard deviation of 2.5
 FA    <- 30-hit # this create a column with the false alarm rates. 
@@ -44,13 +45,13 @@ head(df) #  to show the first 5 participants
 ```
 
 ```
-##   participants hit FA
-## 1            1  20 10
-## 2            2  20 10
-## 3            3  19 11
-## 4            4  17 13
-## 5            5  16 14
-## 6            6  20 10
+  participants hit FA
+1            1  23  7
+2            2  18 12
+3            3  21  9
+4            4  21  9
+5            5  19 11
+6            6  17 13
 ```
 
 - We can quickly check whether the data frame is correct.
@@ -65,16 +66,16 @@ print(paste("The mean for hit is", mean_hit, "with a standard deviation of", for
 ```
 
 ```
-## [1] The mean for hit is 19.91 with a standard deviation of 2.76 . The mean for false alarms is 10.09 with a standard deviation of 2.76 .
+[1] The mean for hit is 19.48 with a standard deviation of 2.68 . The mean for false alarms is 10.52 with a standard deviation of 2.68 .
 ```
 
 ---
 
-### Analyzable Statistics
+## Analyzable Statistics
 
 ---
 
-- Hit rate (HT)           - Rate correctly identified as an old item out of all items 
+- **Hit rate** (HT)           - Rate of choosing the old item out of all items 
 
 
 ```r
@@ -83,12 +84,15 @@ cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mea
 ```
 
 ```
-The hit rate is 0.66
+The hit rate is 0.65
 ```
 
   
   
-- False Alarm Rate (FAR)  - Rate of choosing the new item out of all items
+---
+
+  
+- **False Alarm Rate** (FAR)  - Rate of choosing the new item out of all items
 
 
 ```r
@@ -97,16 +101,20 @@ cat(paste("The false alarm rate is",format(round(mean(FA_rate),2))))
 ```
 
 ```
-The false alarm rate is 0.34
+The false alarm rate is 0.35
 ```
  
+ 
+---
 
-- Corrected hit rate 
+- **Corrected hit rate**
 
 It is possible to calculate a corrected hit rate. However, this depends on several assumptions. For more information [See supplementary Information of Brady et al., 2008](
 https://doi.org/10.1073/pnas.0803390105)
 
-- Sensitivity d'
+---
+
+- **Sensitivity d'**
 
 It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
 
