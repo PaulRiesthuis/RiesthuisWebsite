@@ -32,7 +32,7 @@ output:
 I recently listened to the first episode of the podcast "Quantitude" wherein they discussed the ROC and AUC and the added benefits of such analyses. Moreover, the great article named "Measuring memory is harder than you think: How to avoid problematic measurement practices in memory research" motivated me to create example for simple designs on how to analyze such data. As these analyses are frequently used in memory research, I wanted to create a short tutorial on how to conduct such analyses in R. 
 
 See below the analyses for the following types of memory tasks:
-- [2 Alternative Forced Choice memory Task (2AFC)](https://paul-riesthuis.netlify.app//2AFC-Memory-Task-Data-Analysis/)
+- [2 Alternative Forced Choice memory Task (2AFC)](https://paul-riesthuis.netlify.app/post/2afc-memory-task-data-analysis/)
 - Old or new memory task
 
 ---
