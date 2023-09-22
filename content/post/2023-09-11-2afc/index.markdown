@@ -139,4 +139,52 @@ https://doi.org/10.1073/pnas.0803390105)
 
 It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
 
+
+## Hypothesis testing
+- Then you can use the various statistics to examine differences between groups
+- **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
+
+```r
+df$group <- rep(c("experimental", "control"), each = 50) # to  create two groups
+mod1 <- lm(df$hit ~ df$group, data=df) # general linear model/ t.test
+summary(mod1)
+```
+
+```
+
+Call:
+lm(formula = df$hit ~ df$group, data = df)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+ -6.04  -1.95   0.08   1.96   6.08 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           19.0400     0.3751  50.754   <2e-16 ***
+df$groupexperimental   0.8800     0.5305   1.659      0.1    
 ---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.653 on 98 degrees of freedom
+Multiple R-squared:  0.02731,	Adjusted R-squared:  0.01738 
+F-statistic: 2.751 on 1 and 98 DF,  p-value: 0.1004
+```
+
+
+
+- To get standardized effect sizes
+---
+
+```r
+effectsize(mod1)
+```
+
+```
+# Standardization method: refit
+
+Parameter            | Std. Coef. |         95% CI
+--------------------------------------------------
+(Intercept)          |      19.04 | [18.30, 19.78]
+df$groupexperimental |       0.88 | [-0.17,  1.93]
+```
