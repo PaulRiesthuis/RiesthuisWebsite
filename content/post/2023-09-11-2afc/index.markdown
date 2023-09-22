@@ -77,6 +77,18 @@ print(paste("The mean for hit is", mean_hit, "with a standard deviation of", for
 
 - **Hit rate** (HT)           - Rate of choosing the old item out of all items 
 
+- **hit rate / True Positive Rate**         - Rate of choosing the old when old items are presented 
+
+
+{{< math >}}
+$$
+hit \ rate =  \frac{hit}{false \ alarm}
+$$
+{{< /math >}}
+
+
+[Click here for source of formula](https://doi.org/10.3758/BF03207704) 
+
 
 ```r
 hit_rate <- df$hit/(df$hit+df$FA) # this will give the hit rate for each participant
@@ -93,6 +105,15 @@ The hit rate is 0.65
 
   
 - **False Alarm Rate** (FAR)  - Rate of choosing the new item out of all items
+
+- **false alarm rate / False Positive Rate**         - Rate of choosing the old when new items are presented 
+
+{{< math >}}
+$$
+False \ alarm \ rate =  \frac{false \ alarm}{hit + false \ alarm}
+$$
+{{< /math >}}
+[Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
 
 ```r
