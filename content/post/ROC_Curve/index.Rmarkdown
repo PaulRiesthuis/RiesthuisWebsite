@@ -1,0 +1,159 @@
+---
+title: "ROC Curve Brady et al. (2022)"
+author: 'Paul Riesthuis'
+authors: [Paul Riesthuis]
+slug: roc-curve-brady
+categories: []
+tags: []
+subtitle: ''
+summary: 'In this post, I will conduct the ROC analyses performed in the article of Brady et al. (2022) '
+lastmod: '2023-09-23T16:22:26+02:00'
+date: "2023-09-23"
+projects: []
+output: 
+  html_document:
+    theme: journal
+    code_folding: hide
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(pROC)
+```
+
+# Now let's do a ROC cuve analysis of the data presented in the article by [Brady et al. (2022)](https://doi.org/10.3758/BF03207704).
+## Datasets of Tim and John
+
+```{r, warning = FALSE, message=FALSE}
+old_items_tim <- c(50,50,50,150,500,200)
+new_items_tim <- c(250,250,400,50,25,25)
+confidence <- c("extreme weak","very weak", "fairly weak", "fairly strong", "very strong", "extreme strong")
+df_tim <- data.frame(old_items_tim, new_items_tim, confidence)
+head(df_tim)
+# now same for John
+old_items_john <- c(50,75,75,500,200,100)
+new_items_john <- c(100,400,300,50,75,75) # changed very strong to 75 instead of 25 to have equal number items between tim and john
+df_john <- data.frame(old_items_john, new_items_john, confidence)
+head(df_john)
+```
+
+## Calculate hit rate and false alarm rate 
+- For each threshold (confidence) we calculate the hit rate and false alarm rate.
+```{r, warning = FALSE, message=FALSE}
+#hit rates Tim
+tot_items_tim <- sum(old_items_tim) # to get the total amount of items
+df_tim$hit_tim <- c(old_items_tim[1]/tot_items_tim, 
+         (old_items_tim[1]+old_items_tim[2])/tot_items_tim,
+         (old_items_tim[1]+old_items_tim[2]+old_items_tim[3])/tot_items_tim,
+         (old_items_tim[1]+old_items_tim[2]+old_items_tim[3]+old_items_tim[4])/tot_items_tim,
+         (old_items_tim[1]+old_items_tim[2]+old_items_tim[3]+old_items_tim[4]+old_items_tim[5])/tot_items_tim,
+         (old_items_tim[1]+old_items_tim[2]+old_items_tim[3]+old_items_tim[4]+old_items_tim[5]+old_items_tim[6])/tot_items_tim)
+        
+#hit rates for john
+tot_old_john <- sum(old_items_john)
+df_john$hit_john <- c(old_items_john[1]/tot_old_john, 
+         (old_items_john[1]+old_items_john[2])/tot_old_john,
+         (old_items_john[1]+old_items_john[2]+old_items_john[3])/tot_old_john,
+         (old_items_john[1]+old_items_john[2]+old_items_john[3]+old_items_john[4])/tot_old_john,
+         (old_items_john[1]+old_items_john[2]+old_items_john[3]+old_items_john[4]+old_items_john[5])/tot_old_john,
+         (old_items_john[1]+old_items_john[2]+old_items_john[3]+old_items_john[4]+old_items_john[5]+old_items_john[6])/tot_old_john)
+          
+  
+#false alarm rate Tim
+tot_new_tim <- sum(new_items_tim)
+df_tim$far_tim <- c(new_items_tim[1]/tot_new_tim, 
+         (new_items_tim[1]+new_items_tim[2])/tot_new_tim,
+         (new_items_tim[1]+new_items_tim[2]+new_items_tim[3])/tot_new_tim,
+         (new_items_tim[1]+new_items_tim[2]+new_items_tim[3]+new_items_tim[4])/tot_new_tim,
+         (new_items_tim[1]+new_items_tim[2]+new_items_tim[3]+new_items_tim[4]+new_items_tim[5])/tot_new_tim,
+         (new_items_tim[1]+new_items_tim[2]+new_items_tim[3]+new_items_tim[4]+new_items_tim[5]+new_items_tim[6])/tot_new_tim)
+
+# false alarm rate john
+tot_new_john <- sum(new_items_john)
+df_john$far_john <- c(new_items_john[1]/tot_new_john, 
+         (new_items_john[1]+new_items_john[2])/tot_new_john,
+         (new_items_john[1]+new_items_john[2]+new_items_john[3])/tot_new_john,
+         (new_items_john[1]+new_items_john[2]+new_items_john[3]+new_items_john[4])/tot_new_john,
+         (new_items_john[1]+new_items_john[2]+new_items_john[3]+new_items_john[4]+new_items_john[5])/tot_new_john,
+         (new_items_john[1]+new_items_john[2]+new_items_john[3]+new_items_john[4]+new_items_john[5]+new_items_john[6])/tot_new_john)
+head(df_tim)
+head(df_john)
+```
+
+
+## Plot ROC Curve
+
+```{r}
+roc_data <- data.frame(df_tim,df_john)
+ggplot(roc_data, aes(x = 1- far_tim, y = 1- hit_tim, color = "Tim")) +
+  geom_line()+ geom_point()+
+  geom_line(aes(x = 1 - far_john, y = 1 - hit_john, color="John"))+ geom_point(aes(x = 1 - far_john, y = 1 - hit_john, color="John"))+
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  labs(x = "False Positive Rate (1 - Specificity)", y = "True Positive Rate (Sensitivity)") +
+  ggtitle("ROC Curve")+
+  theme_classic()+
+  ylim(0,1)
+```
+
+## Same ROC curve via pROC
+- First we have to create an item data set
+```{r, warning=FALSE, message=FALSE}
+correct_mem <- rep(c(1, 0), each = 1000)
+confidence_tim  <- c(rep(1,50),
+                 rep(2,50),
+                 rep(3,50),
+                 rep(4,150),
+                 rep(5,500),
+                 rep(6,200),
+                 rep(1,250),
+                 rep(2,250),
+                 rep(3,400),
+                 rep(4,50),
+                 rep(5,25),
+                 rep(6,25))
+confidence_john  <- c(rep(1,50),
+                 rep(2,75),
+                 rep(3,75),
+                 rep(4,500),
+                 rep(5,200),
+                 rep(6,100),
+                 rep(1,100),
+                 rep(2,400),
+                 rep(3,300),
+                 rep(4,50),
+                 rep(5,75), # i made this 75 as in the article there are otherwise only 1950 items for john instead 2000 as with Tim's. It was orignally 25
+                 rep(6,75))
+df <- data.frame(correct_mem,confidence_tim,confidence_john)
+
+glm.fit_tim=glm(correct_mem ~ confidence_tim, family=binomial)
+#plot(confidence_tim, correct_mem)+ lines(confidence, glm.fit_tim$fitted.values)
+glm.fit_john=glm(correct_mem ~ confidence_john, family=binomial)
+#plot(confidence_john, correct_mem)+ lines(confidence, glm.fit_tim$fitted.values)
+
+par(pty="s")
+p1 <- roc(correct_mem, glm.fit_tim$fitted.values, 
+    plot= TRUE,
+    legacy.axes=TRUE, 
+    percent=TRUE, 
+    xlab="False Positive Percentage", 
+    ylab="True Postive Percentage", 
+    col="#377eb8", 
+    lwd=4,
+    print.auc = TRUE)
+
+p1 <- roc(correct_mem, glm.fit_john$fitted.values, 
+    plot= TRUE,
+    legacy.axes=TRUE, 
+    percent=TRUE, 
+    xlab="False Positive Percentage", 
+    ylab="True Postive Percentage", 
+    col="red", 
+    lwd=4,
+    print.auc = TRUE,
+    print.auc.y = 40,
+    add=TRUE)
+
+```
