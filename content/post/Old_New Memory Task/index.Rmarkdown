@@ -255,10 +255,3 @@ summary(mod1)
 
 ```
 
-
-- To get standardized effect sizes
----
-```{r, warning=FALSE, comment=NA}
-effectsize(mod1)
-
-```

@@ -334,21 +334,3 @@ Multiple R-squared:  0.02703,	Adjusted R-squared:  -0.003378
 F-statistic: 0.8889 on 3 and 96 DF,  p-value: 0.4498
 ```
 
-
-- To get standardized effect sizes
----
-
-```r
-effectsize(mod1)
-```
-
-```
-# Standardization method: refit
-
-Parameter             | Std. Coef. |        95% CI
---------------------------------------------------
-(Intercept)           |       1.14 | [ 0.97, 1.31]
-df$groupcontrol2      |      -0.03 | [-0.26, 0.21]
-df$groupexperiment2   |      -0.10 | [-0.34, 0.13]
-df$groupexperimental1 |       0.09 | [-0.15, 0.32]
-```

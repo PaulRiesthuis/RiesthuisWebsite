@@ -174,22 +174,4 @@ F-statistic: 2.751 on 1 and 98 DF,  p-value: 0.1004
 ```
 
 
-
-- To get standardized effect sizes
-
-
-```r
-effectsize(mod1)
-```
-
-```
-# Standardization method: refit
-
-Parameter            | Std. Coef. |         95% CI
---------------------------------------------------
-(Intercept)          |      19.04 | [18.30, 19.78]
-df$groupexperimental |       0.88 | [-0.17,  1.93]
-```
-
-
 ---
