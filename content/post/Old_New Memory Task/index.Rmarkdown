@@ -8,7 +8,7 @@ tags: []
 subtitle: ''
 summary: 'In this post, I will show the possible statistical analyses possible with a new - old memory task'
 lastmod: '2023-09-22T16:22:26+02:00'
-date: "2023-09-13"
+date: "2023-09-22"
 projects: []
 output: 
   html_document:

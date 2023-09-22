@@ -119,6 +119,8 @@ https://doi.org/10.1073/pnas.0803390105)
 It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
 
 
+---
+
 ## Hypothesis testing
 - Then you can use the various statistics to examine differences between groups
 - **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
@@ -133,8 +135,11 @@ summary(mod1)
 
 
 - To get standardized effect sizes
----
+
 ```{r, warning=FALSE, comment=NA}
 effectsize(mod1)
 
 ```
+
+
+---

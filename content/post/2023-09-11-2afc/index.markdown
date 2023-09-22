@@ -140,6 +140,8 @@ https://doi.org/10.1073/pnas.0803390105)
 It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
 
 
+---
+
 ## Hypothesis testing
 - Then you can use the various statistics to examine differences between groups
 - **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
@@ -174,7 +176,7 @@ F-statistic: 2.751 on 1 and 98 DF,  p-value: 0.1004
 
 
 - To get standardized effect sizes
----
+
 
 ```r
 effectsize(mod1)
@@ -188,3 +190,6 @@ Parameter            | Std. Coef. |         95% CI
 (Intercept)          |      19.04 | [18.30, 19.78]
 df$groupexperimental |       0.88 | [-0.17,  1.93]
 ```
+
+
+---
