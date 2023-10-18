@@ -212,7 +212,7 @@ nice_table(john.df,
 ## Confidence Intervals
 - However, to fully examine the AUC we would like 95% CI
   - This can be easily extracted in the pROC package
-  - You can either choose to bootstrap or use the [delong](10.1109/LSP.2014.2337313) 
+  - You can either choose to bootstrap or use the [delong](https://doi.org/10.1109/LSP.2014.2337313) 
   - Using the 95%CI the AUC can be compared to the smallest effect size of interest (e.g., AUC_null = .8)
 ```{r, warning=FALSE,message=FALSE}
 # Delong method
