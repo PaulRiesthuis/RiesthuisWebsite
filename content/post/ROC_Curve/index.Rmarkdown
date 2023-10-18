@@ -28,7 +28,7 @@ library(rempsyc)
 **Page Under Construction**
 
 
-# ROC cuve analysis of [Brady et al. (2022)](https://doi.org/10.3758/BF03207704).
+# ROC cuve analysis of [Brady et al. (2022)](https://doi.org/10.3758/s13423-022-02179-w).
 - Datasets of Tim and John
 ```{r, warning = FALSE, message=FALSE}
 old_items_tim <- c(50,50,50,150,500,200)
