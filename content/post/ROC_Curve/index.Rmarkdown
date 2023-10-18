@@ -37,6 +37,7 @@ confidence <- c("extreme weak","very weak", "fairly weak", "fairly strong", "ver
 df_tim <- data.frame(old_items_tim, new_items_tim, confidence)
 nice_table(df_tim,
            title= "Dataset for Tim")
+
 ```
 
 - Dataset John
@@ -111,7 +112,7 @@ ggplot(roc_data, aes(x = 1- far, y = 1- hit, color = "Tim")) +
   geom_vline(xintercept = .10,
              lwd = 1,
              linetype="dashed")+
-  annotate("text", x=.23, y=1, label="10% false positive")
+  annotate("text", x=.23, y=1, label="10% false positives")
 ```
 
 ## Same ROC curve via pROC
