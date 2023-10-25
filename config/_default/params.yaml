@@ -118,3 +118,4 @@ security:
 
 # Custom CSS
 customCSS: [["scss/custom.css"]] ## Adding extra scss files
+

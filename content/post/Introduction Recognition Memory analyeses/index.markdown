@@ -17,7 +17,7 @@ date: "2023-09-13"
 projects: []
 output: 
   html_document:
-    theme: journal
+    theme: readable
     code_folding: hide
     toc: TRUE
     toc_float: TRUE
