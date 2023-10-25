@@ -12,7 +12,7 @@ date: "2023-09-23"
 projects: []
 output: 
   html_document:
-    theme: journal
+    theme: readable
     code_folding: hide
     toc: TRUE
     toc_float: TRUE
@@ -26,7 +26,6 @@ library(rempsyc)
 ```
 
 **Page Under Construction**
-
 
 # ROC cuve analysis of [Brady et al. (2022)](https://doi.org/10.3758/s13423-022-02179-w).
 - Datasets of Tim and John
