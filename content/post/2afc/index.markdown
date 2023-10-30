@@ -25,15 +25,26 @@ output:
 
 ---
 
-## 2AFC Memory Task
+# 2AFC Memory Task
 
 ---
 
-  - In this memory task there are two possible outcomes: 
-    - hit     =     recognizing studied item
-    - FA      =     recognizing non studied item
+- In this memory task, participants are, for example, asked the following: 
+  - Which of the following two words did you see?
+    - **Table (old-studied)** or **Chair (new-not studied)**
     
-  - Let's create a dataset for this memory task with 30 questions (Which of the following two words did you see? responses: old item or new item)
+- In this memory task there are two possible outcomes: 
+    - hit     =     recognizing studied item
+    - False alarm      =     recognizing non studied item
+    
+
+---
+
+## Dataset    
+- First, I will create a dataset for this type of memory task with
+  - 30 questions
+  - hits  with a mean of 2 and a sd of 2.5
+  - false alarm with a mean of 10 and sd of 2.5
 
 ```r
 # Create variable.
@@ -56,20 +67,6 @@ head(df) #  to show the first 5 participants
 6            6  17 13
 ```
 
-- We can quickly check whether the data frame is correct.
-
-
-```r
-mean_hit <- mean(hit)
-sd_hit <- sd(hit)
-mean_fa <- mean(FA)
-sd_fa <- sd(FA)
-print(paste("The mean for hit is", mean_hit, "with a standard deviation of", format(round(sd_hit,2)),". The mean for false alarms is", mean_fa, "with a standard deviation of", format(round(sd_fa,2)),"."),quote=FALSE)
-```
-
-```
-[1] The mean for hit is 19.48 with a standard deviation of 2.68 . The mean for false alarms is 10.52 with a standard deviation of 2.68 .
-```
 
 ---
 
@@ -77,14 +74,11 @@ print(paste("The mean for hit is", mean_hit, "with a standard deviation of", for
 
 ---
 
-- **Hit rate** (HT)           - Rate of choosing the old item out of all items 
-
-- **hit rate / True Positive Rate**         - Rate of choosing the old when old items are presented 
-
+- **Hit rate**           - Rate of choosing the old item out of all items
 
 {{< math >}}
 $$
-hit \ rate =  \frac{hit}{false \ alarm}
+Hit \ rate =  \frac{hit}{hit + false \ alarm}
 $$
 {{< /math >}}
 
@@ -108,11 +102,10 @@ The hit rate is 0.65
   
 - **False Alarm Rate** (FAR)  - Rate of choosing the new item out of all items
 
-- **false alarm rate / False Positive Rate**         - Rate of choosing the old when new items are presented 
 
 {{< math >}}
 $$
-False \ alarm \ rate =  \frac{false \ alarm}{hit + false \ alarm}
+False \ alarm \ rate =  \frac{false \ alarm}{false \ alarm + hit}
 $$
 {{< /math >}}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
@@ -130,16 +123,16 @@ The false alarm rate is 0.35
  
 ---
 
-- **Corrected hit rate**
 
-It is possible to calculate a corrected hit rate. However, this depends on several assumptions. For more information [See supplementary Information of Brady et al., 2008](
-https://doi.org/10.1073/pnas.0803390105)
+### Corrected hit rate
+
+It is possible to calculate a corrected hit rate. However, this depends on several assumptions. For more information [see supplementary information of Brady et al., 2008](https://doi.org/10.1073/pnas.0803390105)
 
 ---
 
-- **Sensitivity d'**
+### Sensitivity d'
 
-It is possible to calculate or look up the sensitivity d' from the percentage correct [see here formula and table](https://doi.org/10.3758/BF03208311)
+It is possible to calculate or look up the sensitivity d' from the percentage correct. However, this depends on several assumptions. [Click here for formula and table](https://doi.org/10.3758/BF03208311)
 
 
 ---
