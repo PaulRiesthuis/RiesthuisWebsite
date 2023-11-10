@@ -120,17 +120,3 @@ It is possible to calculate or look up the sensitivity d' from the percentage co
 
 
 ---
-
-## Hypothesis testing
-- Then you can use the various statistics to examine differences between groups
-- **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
-```{r, warning=FALSE, comment=NA}
-
-df$group <- rep(c("experimental", "control"), each = 50) # to  create two groups
-mod1 <- lm(df$hit ~ df$group, data=df) # general linear model/ t.test
-summary(mod1)
-
-```
-
-
----

@@ -67,10 +67,12 @@ head(df)
 ---
 
 
-- **hit rate / True Positive Rate**         - Rate of choosing the old when old items are presented 
+### **hit rate / True Positive Rate**         
+- Rate of choosing the old when old items are presented 
+- In other fields also called called sensitivity, but we use sensitivity for d'
 
 \begin{align*}
-hit \ rate =  \frac{hit}{false alarm}\\
+hit \ rate =  \frac{hit}{hit + miss}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
@@ -88,10 +90,11 @@ The hit rate is 0.65
 
 ---
 
-- **Overall Percent Correct**       - Percentage of hits and correct rejections together
+### **Overall Percent Correct**       
+- Percentage of hits and correct rejections together
 
 \begin{align*}
-Overall \ Percent \ Correct =  \frac{hits + correct \ rejections}{hits + miss + false \ alarms + correct \ rejections + }\\
+Overall \ Percent \ Correct =  \frac{hits + correct \ rejections}{hits + miss + false \ alarms + correct \ rejections}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/s13423-022-02179-w) 
@@ -110,8 +113,8 @@ The overall percentage correct is 70.28
 
 ---
 
-
-- **false alarm rate / False Positive Rate**         - Rate of choosing the old when new items are presented 
+### **false alarm rate / False Positive Rate**         
+- Rate of choosing the old when new items are presented 
 
 \begin{align*}
 False \ alarm \ rate =  \frac{false \ alarm}{correct \ rejection + false \ alarm}\\
@@ -132,7 +135,8 @@ The false alarm rate is 0.24
 ---
 
 
-- **Specificity**   - rate of choosing new when new items are presented
+### **Specificity**   
+- rate of choosing new when new items are presented
 
 \begin{align*}
 Specificity =  \frac{correct \ rejection}{false \ alarm + Correct \ rejection}\\
@@ -150,12 +154,12 @@ The false alarm rate is 0.76
 ```
 
  
- 
 ---
 
 
 
-- **Sensitivity (d′)**        - Ability to discriminate between the signal and noise
+### **sensitivity (d')**        
+- Ability to discriminate between the signal and noise
 
 \begin{align*}
 Sensitivity =  Z(hit \ rate) -  Z(false \ alarm)\\
@@ -173,10 +177,12 @@ The sensitivity d' is 1
 ```
 
 
+
 ---
 
 
-- **Response Bias (c)**       - Individual's tendency to favor one response alternative over the other
+### **Response Bias (c)**       
+- Individual's tendency to favor one response alternative over the other
 
 \begin{align*}
 Response \ Bias =  -\frac{Z(hit \ rate) +  Z(false \ alarm)}{2}\\
@@ -197,7 +203,8 @@ The response bias c is 0.17
 ---
 
 
-- **Diagnositicity ratio**       - The accuracy of recognizing "old" items.
+### **Diagnositicity ratio**       
+- The accuracy of recognizing "old" items.
 
 \begin{align*}
 Diagnositicity \ ratio =  \frac{hit \ rate}{false \ alarm \ rate}\\
@@ -219,7 +226,8 @@ The diagnosticity is 3.35
 ----
 
 
-- **positive likelihood ratio (PLR)** - Probability that participants indicate "old" when the item is "old" divided by the probability that participants indicate "old" for "new" items
+### **Positive likelihood ratio (PLR)** 
+- Probability that participants indicate "old" when the item is "old" divided by the probability that participants indicate "old" for "new" items
 
 \begin{align*}
 Positive \ likelihood \ ratio =  \frac{hit \ rate}{1 - false \ alarm \ rate}\\
@@ -241,7 +249,8 @@ The PLR is 0.87
 ---
 
 
-- **Negative likelihood ratio (NLR)** -  The probability of participants indicating "new" when the item is "old" divided by the probability that participants indicate "new" when the items is "new" (specificity)
+### **Negative likelihood ratio (NLR)** 
+-  The probability of participants indicating "new" when the item is "old" divided by the probability that participants indicate "new" when the items is "new" (specificity)
 
 \begin{align*}
 Negative \ likelihood \ ratio =  \frac{1- hit \ rate}{specificity}\\
@@ -262,7 +271,8 @@ The NLR is 0.47
 ----
 
 
-- **positive predictive value (PPV)** - Probability that participants indicate "old" when the item is "old" divided by the probability that participants indicate "old" for "new" items
+### **Positive predictive value (PPV)** 
+- Probability that of correctly indicating "old" out of all "old" responses (hits +false alarms)
 
 \begin{align*}
 Positive \ predictive \ value =  \frac{hit \ rate}{hits + false \ alarms}\\
@@ -271,19 +281,20 @@ Positive \ predictive \ value =  \frac{hit \ rate}{hits + false \ alarms}\\
 
 ```r
 # positive likelihood ratio
-df$ppv <- df$hit/(df$hit+df$FA)
+df$ppv <- df$hit/(df$hit+df$fa) * 100
 cat(paste("The PPV is",format(round(mean(df$ppv),2))))
 ```
 
 ```
-The PPV is 0.99
+The PPV is 73.23
 ```
 
 
 ---
 
 
-- **Negative predictive value (NPV)** -  The probability of participants indicating "new" when the item is "old" divided by the probability that participants indicate "new" when the items is "new" (specificity)
+### **Negative predictive value (NPV)** 
+-  The probability of correctly indicating "new" out of all  "new" responses (misses + correct rejections)
 
 \begin{align*}
 Negative \ predictive \ value =  \frac{correct \ rejection}{correct \ rejection + miss}\\
@@ -293,46 +304,11 @@ Negative \ predictive \ value =  \frac{correct \ rejection}{correct \ rejection 
 
 ```r
 # Negative likelihood ratio
-df$nlr <- df$cr/df$cr+df$miss
+df$nlr <- df$cr/(df$cr+df$miss) * 100
 cat(paste("The NPV is",format(round(mean(df$nlr),2))))
 ```
 
 ```
-## The NPV is 11.52
+## The NPV is 68.54
 ```
    
-  
-## Hypothesis testing
-- Then you can use the various statistics to examine differences between groups
-- This will again just be a general linear model or in other words a one-way ANOVA between groups.
-- **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
-
-```r
-df$group <- rep(c("experimental1","experiment2", "control1", "control2"), each = 25) # to  create two groups
-mod1 <- lm(df$sens ~ df$group, data=df) # general linear model/ t.test
-summary(mod1)
-```
-
-```
-
-Call:
-lm(formula = df$sens ~ df$group, data = df)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.95081 -0.26890 -0.06302  0.24268  1.34536 
-
-Coefficients:
-                      Estimate Std. Error t value Pr(>|t|)    
-(Intercept)            1.13896    0.08421  13.525   <2e-16 ***
-df$groupcontrol2      -0.02748    0.11910  -0.231    0.818    
-df$groupexperiment2   -0.10450    0.11910  -0.877    0.382    
-df$groupexperimental1  0.08788    0.11910   0.738    0.462    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4211 on 96 degrees of freedom
-Multiple R-squared:  0.02703,	Adjusted R-squared:  -0.003378 
-F-statistic: 0.8889 on 3 and 96 DF,  p-value: 0.4498
-```
-
