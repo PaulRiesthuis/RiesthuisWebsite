@@ -193,7 +193,7 @@ p1 <- roc(correct_mem, glm.fit_tim$fitted.values,
     lwd=4,
     print.auc = TRUE)
 
-p1 <- roc(correct_mem, glm.fit_john$fitted.values, 
+p2 <- roc(correct_mem, glm.fit_john$fitted.values, 
     plot= TRUE,
     legacy.axes=TRUE, 
     percent=TRUE, 
@@ -293,6 +293,45 @@ nice_table(tab_ci,
 )
 
 ```
+
+- We can also plot the 95%CI intervals of the ROC curves
+
+```{r, warning=FALSE, message=FALSE}
+par(pty="s")
+p1 <- roc(correct_mem, glm.fit_tim$fitted.values, 
+    plot= TRUE,
+    legacy.axes=TRUE, 
+    percent=TRUE, 
+    xlab="False Positive Percentage", 
+    ylab="True Postive Percentage", 
+    col="#377eb8", 
+    lwd=4,
+    print.auc = TRUE)
+p3 <- ci.se(p1,                         # CI of Tim
+            specificities = seq(0, 100, 1),  # CI of sensitivity at at what specificities? 0,5,10,15,....,100
+            conf.level=0.95,                 # level of Confidence interval
+) 
+
+plot(p3, type = "shape", col = "blue")
+
+p2 <- roc(correct_mem, glm.fit_john$fitted.values, 
+    plot= TRUE,
+    legacy.axes=TRUE, 
+    percent=TRUE, 
+    xlab="False Positive Percentage", 
+    ylab="True Postive Percentage", 
+    col="red", 
+    lwd=4,
+    print.auc = TRUE,
+    print.auc.y = 40,
+    add=TRUE)
+p4 <- ci.se(p2,                         # CI of john 
+            specificities = seq(0, 100, 1),  # CI at which thresholds?
+            conf.level=0.95,                 # indicate confidence interval
+) 
+plot(p4, type = "shape", col = "red")     # plot as a blue shape
+```
+
 
 
 ---
