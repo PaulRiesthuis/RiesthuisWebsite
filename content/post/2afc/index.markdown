@@ -20,8 +20,6 @@ output:
 
 
 
-**Page Under Construction**
-
 
 ---
 
@@ -34,8 +32,8 @@ output:
     - **Table (old-studied)** or **Chair (new-not studied)**
     
 - In this memory task there are two possible outcomes: 
-    - hit     =     recognizing studied item
-    - False alarm      =     recognizing non studied item
+    - hit (H)     =     recognizing studied item
+    - False alarm (FA)     =     recognizing non studied item
     
 
 ---
@@ -72,13 +70,15 @@ head(df) #  to show the first 5 participants
 
 ## Analyzable Statistics
 
+- I will show the common statistics that can be calculated based on this type of dataset.
+
 ---
 
 - **Hit rate**           - Rate of choosing the old item out of all items
 
 {{< math >}}
 $$
-Hit \ rate =  \frac{hit}{hit + false \ alarm}
+Hit \ rate =  \frac{H}{H + FA}
 $$
 {{< /math >}}
 
@@ -105,7 +105,7 @@ The hit rate is 0.65
 
 {{< math >}}
 $$
-False \ alarm \ rate =  \frac{false \ alarm}{false \ alarm + hit}
+False \ alarm \ rate =  \frac{FA}{FA + H}
 $$
 {{< /math >}}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
@@ -133,40 +133,6 @@ It is possible to calculate a corrected hit rate. However, this depends on sever
 ### Sensitivity d'
 
 It is possible to calculate or look up the sensitivity d' from the percentage correct. However, this depends on several assumptions. [Click here for formula and table](https://doi.org/10.3758/BF03208311)
-
-
----
-
-## Hypothesis testing
-- Then you can use the various statistics to examine differences between groups
-- **NOTE** The statistics you decide to examine depends on your research question. Exploratory analyses should be communicated transparently!
-
-```r
-df$group <- rep(c("experimental", "control"), each = 50) # to  create two groups
-mod1 <- lm(df$hit ~ df$group, data=df) # general linear model/ t.test
-summary(mod1)
-```
-
-```
-
-Call:
-lm(formula = df$hit ~ df$group, data = df)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
- -6.04  -1.95   0.08   1.96   6.08 
-
-Coefficients:
-                     Estimate Std. Error t value Pr(>|t|)    
-(Intercept)           19.0400     0.3751  50.754   <2e-16 ***
-df$groupexperimental   0.8800     0.5305   1.659      0.1    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.653 on 98 degrees of freedom
-Multiple R-squared:  0.02731,	Adjusted R-squared:  0.01738 
-F-statistic: 2.751 on 1 and 98 DF,  p-value: 0.1004
-```
 
 
 ---

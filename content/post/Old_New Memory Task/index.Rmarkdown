@@ -25,8 +25,6 @@ library(pROC)
 library(effectsize)
 ```
 
-**Page Under Construction**
-
 
 ---
 
@@ -34,10 +32,10 @@ library(effectsize)
 
 In new_old memory task, participants receive an item (new or old).Then asked whether they studied this item (old) or whether they think it is new. In this scenario there are four possible outcomes:
 
-- hit     =     recognizing studied item (indicating *old* when item is *old*)
-- false alarm (fa)      =     recognizing non studied item (indicating *old* when item is *new*)
-- miss    =     Not recognizing studied item (indicating *new* when item is *old*)
-- correct rejection (cr)      = Recognizing that an item was not studied (indicating *new* when item is *new*)
+- hit (H)     =     recognizing studied item (indicating *old* when item is *old*)
+- false alarm (FA)      =     recognizing non studied item (indicating *old* when item is *new*)
+- miss (M)    =     Not recognizing studied item (indicating *new* when item is *old*)
+- correct rejection (CR)      = Recognizing that an item was not studied (indicating *new* when item is *new*)
     
 ## Let's create a dataset. 
 - Let's take a study with 30 old and 30 new items (60 in total)
@@ -58,6 +56,8 @@ head(df)
 
 ## Analyzable Statistics
 
+- I will show the common statistics that can be calculated based on this type of dataset.
+
 ---
 
 
@@ -66,7 +66,7 @@ head(df)
 - In other fields also called called sensitivity, but we use sensitivity for d'
 
 \begin{align*}
-hit \ rate =  \frac{hit}{hit + miss}\\
+hit \ rate =  \frac{H}{H + M}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
@@ -83,7 +83,7 @@ cat(paste("The hit rate is",format(round(mean(df$hit_rate),2)))) # The function 
 - Percentage of hits and correct rejections together
 
 \begin{align*}
-Overall \ Percent \ Correct =  \frac{hits + correct \ rejections}{hits + miss + false \ alarms + correct \ rejections}\\
+Overall \ Percent \ Correct =  \frac{H + CR}{H + M + FA + CR}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/s13423-022-02179-w) 
@@ -102,7 +102,7 @@ cat(paste("The overall percentage correct is",format(round(mean(df$per_corr),2))
 - Rate of choosing the old when new items are presented 
 
 \begin{align*}
-False \ alarm \ rate =  \frac{false \ alarm}{correct \ rejection + false \ alarm}\\
+False \ alarm \ rate =  \frac{FA}{FA + CR}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
@@ -119,7 +119,7 @@ cat(paste("The false alarm rate is",format(round(mean(df$FA_rate),2))))
 - rate of choosing new when new items are presented
 
 \begin{align*}
-Specificity =  \frac{correct \ rejection}{false \ alarm + Correct \ rejection}\\
+Specificity =  \frac{CR}{CR + FA}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 ```{r, warning=FALSE, comment= NA}
@@ -137,7 +137,7 @@ cat(paste("The false alarm rate is",format(round(mean(df$spec),2))))
 - Ability to discriminate between the signal and noise
 
 \begin{align*}
-Sensitivity =  Z(hit \ rate) -  Z(false \ alarm)\\
+Sensitivity =  Z(H) -  Z(FA)\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
@@ -171,7 +171,7 @@ cat(paste("The response bias c is",format(round(mean(df$c),2))))
 
 
 ### **Diagnositicity ratio**       
-- The accuracy of recognizing "old" items.
+- The ratio of recognizing "old" items as old to recognizing new items as "old".
 
 \begin{align*}
 Diagnositicity \ ratio =  \frac{hit \ rate}{false \ alarm \ rate}\\
@@ -228,9 +228,9 @@ cat(paste("The NLR is",format(round(mean(df$nlr),2))))
 - Probability that of correctly indicating "old" out of all "old" responses (hits +false alarms)
 
 \begin{align*}
-Positive \ predictive \ value =  \frac{hit \ rate}{hits + false \ alarms}\\
+Positive \ predictive \ value =  \frac{H}{H + FA}\\
 \end{align*} 
-[Click here for source of formula](https://doi.org/10.3758/BF03207704)
+[Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 ```{r, warning=FALSE, comment= NA}
 # positive likelihood ratio
 df$ppv <- df$hit/(df$hit+df$fa) * 100
@@ -245,9 +245,9 @@ cat(paste("The PPV is",format(round(mean(df$ppv),2))))
 -  The probability of correctly indicating "new" out of all  "new" responses (misses + correct rejections)
 
 \begin{align*}
-Negative \ predictive \ value =  \frac{correct \ rejection}{correct \ rejection + miss}\\
+Negative \ predictive \ value =  \frac{CR}{CR + M}\\
 \end{align*} 
-[Click here for source of formula](https://doi.org/10.3758/BF03207704)
+[Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 
 ```{r}
 # Negative likelihood ratio

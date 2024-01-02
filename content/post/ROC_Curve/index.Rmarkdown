@@ -25,10 +25,19 @@ library(pROC)
 library(rempsyc)
 ```
 
-**Page Under Construction**
 
-# ROC cuve analysis of [Brady et al. (2022)](https://doi.org/10.3758/s13423-022-02179-w).
-- Datasets of Tim and John
+# ROC cuve analysis of [Brady et al. (2022)](https://doi.org/10.3758/s13423-022-02179-w).\
+- In this blogpost, I will show how to construct the datasets of Tim and John and the Receiver Operator Characteristic (ROC) curves provided in the article of Brady et al. (2022)
+  - Then, I will show the following:
+    - How to calculate common statistics that can be calculated based on this type of dataset. Most statistics are similar to the ones shown at the page about ["old" and "new" memory task](https://paul-riesthuis.netlify.app/post/new-old-memory-task-data-analysis/)
+    - How to construct (ROC) curves by hand and via logistic regression.
+    - How to calculate the area under the ROC curve. 
+    - How to calculate confidence intervals for the AUC
+    - How to calculate partial area under the curve.
+    
+
+## Datasets constructed by hand
+- Dataset of Tim
 ```{r, warning = FALSE, message=FALSE}
 old_items_tim <- c(50,50,50,150,500,200)
 new_items_tim <- c(250,250,400,50,25,25)
@@ -49,8 +58,15 @@ nice_table(df_john,
            title = "Dataset for John")
 ```
 
+
+---
+
 ## Add hit rate and false alarm rate 
-- Tim
+
+---
+
+
+- **Tim**
 ```{r, warning = FALSE, message=FALSE}
 #hit rates Tim
 tot_items_tim <- sum(old_items_tim) # to get the total amount of items
@@ -73,7 +89,7 @@ df_tim$far <- c(new_items_tim[1]/tot_new_tim,
 nice_table(df_tim,
            title= "Dataset + Hit and False Alarm rate for Tim")
 ```
-- John
+- **John**
 ```{r}
 #hit rates for john
 tot_old_john <- sum(old_items_john)
@@ -97,7 +113,15 @@ nice_table(df_john,
 ```
 
 
+---
+
+
 ## Plot ROC Curves for Tim and John
+
+
+---
+
+
 ```{r, warning=FALSE,message=FALSE}
 roc_data <- data.frame(df_tim,df_john)
 ggplot(roc_data, aes(x = 1- far, y = 1- hit, color = "Tim")) +
@@ -114,8 +138,8 @@ ggplot(roc_data, aes(x = 1- far, y = 1- hit, color = "Tim")) +
   annotate("text", x=.23, y=1, label="10% false positives")
 ```
 
-## Same ROC curve via pROC
-- First we have to create an item data set
+## ROC Curve via Logistic regression
+- Create datasets for Tim and John that are compatible for logistic regression.
 ```{r, warning=FALSE, message=FALSE}
 correct_mem <- rep(c(1, 0), each = 1000)
 confidence_tim  <- c(rep(1,50),
@@ -144,6 +168,17 @@ confidence_john  <- c(rep(1,50),
                  rep(6,75))
 df <- data.frame(correct_mem,confidence_tim,confidence_john)
 
+```
+
+---
+
+
+- **Create ROC Curves for both**
+
+---
+
+
+```{r, warning=FALSE, message=FALSE}
 glm.fit_tim=glm(correct_mem ~ confidence_tim, family=binomial)
 glm.fit_john=glm(correct_mem ~ confidence_john, family=binomial)
 
@@ -176,9 +211,16 @@ legend("bottomright", legend=c("Tim", "John"),
 
 ```
 
+---
+
+
 ## True and False Positive per Threshold
+
+
+---
+
   - This can be used to examine the blackstone ratio (10:1; false negative to false positive ratio)
-  - For Tim
+  - True and False Positive percentages for each confidence threshold for Tim
 ```{r, warning=FALSE,message=FALSE}
 info_tim <- roc(correct_mem, glm.fit_tim$fitted.values) 
 tim.df <- data.frame(
@@ -192,7 +234,11 @@ tim.df <- tim.df[-c(1,7), ]
 nice_table(tim.df,
            title="True Positive and False Positive Percentages for each Threshold")
 ```
-  - John
+
+
+  - True and False Positive percentages for each confidence threshold for John
+
+
 ```{r, warning=FALSE,message=FALSE}
 info_john <- roc(correct_mem, glm.fit_john$fitted.values) 
 john.df <- data.frame(
@@ -208,11 +254,21 @@ nice_table(john.df,
 ```
 
 
+---
+
 ## Confidence Intervals
-- However, to fully examine the AUC we would like 95% CI
-  - This can be easily extracted in the pROC package
-  - You can either choose to bootstrap or use the [delong](https://doi.org/10.1109/LSP.2014.2337313) 
-  - Using the 95%CI the AUC can be compared to the smallest effect size of interest (e.g., AUC_null = .8)
+
+
+---
+
+- The graphs provide important information for whos memory is better.
+  - For example, the ROC curve of Tim is greater at eacg threshold than the ROC curve of John. 
+- However, to fully examine the AUC we would like 95% CI.
+  - This can be easily extracted in the pROC package.
+  - You can either choose to bootstrap or use the [delong method](https://doi.org/10.1109/LSP.2014.2337313).
+  - Using the 95%CI the AUC can be compared to the smallest effect size of interest (e.g., AUC_null = .8).
+
+
 ```{r, warning=FALSE,message=FALSE}
 # Delong method
 auc_tim <- roc(correct_mem, glm.fit_tim$fitted.values)
@@ -238,16 +294,25 @@ nice_table(tab_ci,
 
 ```
 
+
+---
+
 ## Partial AUC
+
+
+---
+
 - We can calculate the area under the curve for a part of the curve.
   - One example is to calculate the curve for values under the 10% false positive
   - That is because we want to minimize the amount of false positive when it comes to eyewitness identification.
+  
+
 ```{r, warning=FALSE,message=FALSE}
-# Calculate the partial AUC and confidence intervals
+# Calculate the partial AUC
 partial_auc_tim <- roc(correct_mem, glm.fit_tim$fitted.values, partial.auc=c(100,90), percent = T)
 partial_auc_john <- roc(correct_mem, glm.fit_john$fitted.values, partial.auc=c(100,90), percent = T)
 
-# Print the partial AUC and confidence intervals
+# Print the partial AUC
 par(pty="s")
 p1 <- plot(partial_auc_tim,
     plot= TRUE,

@@ -20,8 +20,6 @@ output:
 
 
 
-**Page Under Construction**
-
 
 ---
 
@@ -29,10 +27,10 @@ output:
 
 In new_old memory task, participants receive an item (new or old).Then asked whether they studied this item (old) or whether they think it is new. In this scenario there are four possible outcomes:
 
-- hit     =     recognizing studied item (indicating *old* when item is *old*)
-- false alarm (fa)      =     recognizing non studied item (indicating *old* when item is *new*)
-- miss    =     Not recognizing studied item (indicating *new* when item is *old*)
-- correct rejection (cr)      = Recognizing that an item was not studied (indicating *new* when item is *new*)
+- hit (H)     =     recognizing studied item (indicating *old* when item is *old*)
+- false alarm (FA)      =     recognizing non studied item (indicating *old* when item is *new*)
+- miss (M)    =     Not recognizing studied item (indicating *new* when item is *old*)
+- correct rejection (CR)      = Recognizing that an item was not studied (indicating *new* when item is *new*)
     
 ## Let's create a dataset. 
 - Let's take a study with 30 old and 30 new items (60 in total)
@@ -64,6 +62,8 @@ head(df)
 
 ## Analyzable Statistics
 
+- I will show the common statistics that can be calculated based on this type of dataset.
+
 ---
 
 
@@ -72,7 +72,7 @@ head(df)
 - In other fields also called called sensitivity, but we use sensitivity for d'
 
 \begin{align*}
-hit \ rate =  \frac{hit}{hit + miss}\\
+hit \ rate =  \frac{H}{H + M}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
@@ -94,7 +94,7 @@ The hit rate is 0.65
 - Percentage of hits and correct rejections together
 
 \begin{align*}
-Overall \ Percent \ Correct =  \frac{hits + correct \ rejections}{hits + miss + false \ alarms + correct \ rejections}\\
+Overall \ Percent \ Correct =  \frac{H + CR}{H + M + FA + CR}\\
 \end{align*}
 
 [Click here for source of formula](https://doi.org/10.3758/s13423-022-02179-w) 
@@ -117,7 +117,7 @@ The overall percentage correct is 70.28
 - Rate of choosing the old when new items are presented 
 
 \begin{align*}
-False \ alarm \ rate =  \frac{false \ alarm}{correct \ rejection + false \ alarm}\\
+False \ alarm \ rate =  \frac{FA}{FA + CR}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
@@ -139,7 +139,7 @@ The false alarm rate is 0.24
 - rate of choosing new when new items are presented
 
 \begin{align*}
-Specificity =  \frac{correct \ rejection}{false \ alarm + Correct \ rejection}\\
+Specificity =  \frac{CR}{CR + FA}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
@@ -162,7 +162,7 @@ The false alarm rate is 0.76
 - Ability to discriminate between the signal and noise
 
 \begin{align*}
-Sensitivity =  Z(hit \ rate) -  Z(false \ alarm)\\
+Sensitivity =  Z(H) -  Z(FA)\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
@@ -204,7 +204,7 @@ The response bias c is 0.17
 
 
 ### **Diagnositicity ratio**       
-- The accuracy of recognizing "old" items.
+- The ratio of recognizing "old" items as old to recognizing new items as "old".
 
 \begin{align*}
 Diagnositicity \ ratio =  \frac{hit \ rate}{false \ alarm \ rate}\\
@@ -275,9 +275,9 @@ The NLR is 0.47
 - Probability that of correctly indicating "old" out of all "old" responses (hits +false alarms)
 
 \begin{align*}
-Positive \ predictive \ value =  \frac{hit \ rate}{hits + false \ alarms}\\
+Positive \ predictive \ value =  \frac{H}{H + FA}\\
 \end{align*} 
-[Click here for source of formula](https://doi.org/10.3758/BF03207704)
+[Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 
 ```r
 # positive likelihood ratio
@@ -297,9 +297,9 @@ The PPV is 73.23
 -  The probability of correctly indicating "new" out of all  "new" responses (misses + correct rejections)
 
 \begin{align*}
-Negative \ predictive \ value =  \frac{correct \ rejection}{correct \ rejection + miss}\\
+Negative \ predictive \ value =  \frac{CR}{CR + M}\\
 \end{align*} 
-[Click here for source of formula](https://doi.org/10.3758/BF03207704)
+[Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 
 
 ```r

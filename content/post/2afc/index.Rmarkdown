@@ -25,8 +25,6 @@ library(pROC)
 library(effectsize)
 ```
 
-**Page Under Construction**
-
 
 ---
 
@@ -39,8 +37,8 @@ library(effectsize)
     - **Table (old-studied)** or **Chair (new-not studied)**
     
 - In this memory task there are two possible outcomes: 
-    - hit     =     recognizing studied item
-    - False alarm      =     recognizing non studied item
+    - hit (H)     =     recognizing studied item
+    - False alarm (FA)     =     recognizing non studied item
     
 
 ---
@@ -66,13 +64,15 @@ head(df) #  to show the first 5 participants
 
 ## Analyzable Statistics
 
+- I will show the common statistics that can be calculated based on this type of dataset.
+
 ---
 
 - **Hit rate**           - Rate of choosing the old item out of all items
 
 {{< math >}}
 $$
-Hit \ rate =  \frac{hit}{hit + false \ alarm}
+Hit \ rate =  \frac{H}{H + FA}
 $$
 {{< /math >}}
 
@@ -94,7 +94,7 @@ cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mea
 
 {{< math >}}
 $$
-False \ alarm \ rate =  \frac{false \ alarm}{false \ alarm + hit}
+False \ alarm \ rate =  \frac{FA}{FA + H}
 $$
 {{< /math >}}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
