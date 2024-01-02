@@ -294,7 +294,15 @@ nice_table(tab_ci,
 
 ```
 
-- We can also plot the 95%CI intervals of the ROC curves
+
+---
+
+## ROC curves with 95%
+
+---
+
+- Preferably, we plot the confidence intervals along the ROC curve to better interpret the results
+
 
 ```{r, warning=FALSE, message=FALSE}
 par(pty="s")
