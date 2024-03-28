@@ -8,7 +8,7 @@ authors:
 - Henry Otgaar
 #date: "2024-02-01T00:00:00Z"
 doi: "https://www.researchgate.net/publication/378907633_Is_de_rechtspsychologie_wel_klaar_voor_de_rechtbank_Het_belang_van_de_kleinste_effectgrootte_van_interesse_in_rechtspsychologisch_onderzoek"
-featured: true
+featured: false
 projects: []
 publication: '*Expertise & Recht*'
 publication_short: ""
