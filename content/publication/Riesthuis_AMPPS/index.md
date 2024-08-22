@@ -6,8 +6,8 @@ author_notes:
 authors:
 - admin
 #date: "2024-03-01T00:00:00Z"
-doi: "https://www.researchgate.net/publication/378611133_Simulation-Based_Power_Analyses_for_the_Smallest_Effect_Size_of_Interest_A_Confidence_Interval_Approach_for_Minimum-Effect_and_Equivalence_Testing"
-featured: true
+doi: "https://doi.org/10.1177/25152459241240722"
+featured: false
 projects: []
 publication: '*Advances in Methods and Practices in Psychological Science*'
 publication_short: ""
