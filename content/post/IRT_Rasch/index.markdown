@@ -22,11 +22,10 @@ output:
 
 
 # Item Response Theory
-In this tutorial, I will show how to conduct Item Response Theory models to assess the psychometric structure of typical eyewitness memory assessements (e.g., DRM, misinformation). I will focus on IRT models with binary outcomes as this is most typically used in eyewitness memory research. In this tutorial I will use the data of Otgaar et al. (2020) - False denials blablabla. In this tutorial, I will show how to:
+In this tutorial, I will show how to conduct Item Response Theory models to assess the psychometric structure of typical eyewitness memory assessements (e.g., DRM, misinformation). I will focus on IRT models with binary outcomes as this is most typically used in eyewitness memory research. In this tutorial I will use the data of Otgaar et al. (2020) - False denials. In this tutorial, I will show how to:
   - Conduct a Rasch model
-  - Conduct a 2PL model
-  - Features to inspect of both models
-  - How to analyze the underlying factor scores
+  - Features to inspect
+  - Extracting underlying factor scores
   
 ## Load Data 
 We will start with 1 DRM list of the study of Otgaar et al (2020). We will focus on true memory (studied items). 
@@ -212,6 +211,8 @@ plot(mod_rasch, type= "infoSE")
 
 ### Factor scores
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
 ``` r
 # Get latent trait scores
 df_irt$fscor <- mirt::fscores(mod_rasch)
@@ -227,4 +228,5 @@ head(df_irt$fscor)
 ## [5,] 0.06590852
 ## [6,] 0.77109655
 ```
+</div>
 

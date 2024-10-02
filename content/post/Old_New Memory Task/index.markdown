@@ -35,8 +35,9 @@ In new_old memory task, participants receive an item (new or old).Then asked whe
 ## Let's create a dataset. 
 - Let's take a study with 30 old and 30 new items (60 in total)
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 set.seed(2794)
 participants <- seq(1,100,1) # This creates a column with 100 participants
 hit   <- c(round(c(rnorm(100,20,2.5))))#  this creates a random number of hits that are normally distributed with a mean of 20 and standard deviation of 2.5
@@ -56,6 +57,7 @@ head(df)
 5            5  19  7   11 23
 6            6  17  5   13 25
 ```
+</div>
 
 ---
 
@@ -77,7 +79,9 @@ hit \ rate =  \frac{H}{H + M}\\
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
+``` r
 df$hit_rate <- df$hit/(df$hit+df$miss)
 
 cat(paste("The hit rate is",format(round(mean(df$hit_rate),2)))) # The function mean turns the hit rate into the mean for the group
@@ -86,6 +90,7 @@ cat(paste("The hit rate is",format(round(mean(df$hit_rate),2)))) # The function 
 ```
 The hit rate is 0.65
 ```
+</div>
 
 
 ---
@@ -99,8 +104,9 @@ Overall \ Percent \ Correct =  \frac{H + CR}{H + M + FA + CR}\\
 
 [Click here for source of formula](https://doi.org/10.3758/s13423-022-02179-w) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 df$per_corr = (df$hit+df$cr)/(df$hit+df$fa+df$miss+df$cr)*100
 cat(paste("The overall percentage correct is",format(round(mean(df$per_corr),2))))
 ```
@@ -108,6 +114,7 @@ cat(paste("The overall percentage correct is",format(round(mean(df$per_corr),2))
 ```
 The overall percentage correct is 70.28
 ```
+</div>
 
 
 
@@ -121,8 +128,9 @@ False \ alarm \ rate =  \frac{FA}{FA + CR}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 df$FA_rate <- df$fa/(df$cr+df$fa) # this will give the FA rate for each participant
 cat(paste("The false alarm rate is",format(round(mean(df$FA_rate),2))))
 ```
@@ -130,7 +138,8 @@ cat(paste("The false alarm rate is",format(round(mean(df$FA_rate),2))))
 ```
 The false alarm rate is 0.24
 ```
-  
+</div>
+
   
 ---
 
@@ -143,7 +152,9 @@ Specificity =  \frac{CR}{CR + FA}\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
+``` r
 df$spec <- df$cr/(df$fa+df$cr) # this will give the FA rate for each participant
 # or 1 - fa_rate
 cat(paste("The false alarm rate is",format(round(mean(df$spec),2))))
@@ -152,6 +163,7 @@ cat(paste("The false alarm rate is",format(round(mean(df$spec),2))))
 ```
 The false alarm rate is 0.76
 ```
+</div>
 
  
 ---
@@ -166,8 +178,9 @@ Sensitivity =  Z(H) -  Z(FA)\\
 \end{align*}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 df$sens = qnorm(df$hit_rate) - qnorm(df$FA_rate)
 cat(paste("The sensitivity d' is",format(round(mean(df$sens,2)))))
 ```
@@ -175,6 +188,7 @@ cat(paste("The sensitivity d' is",format(round(mean(df$sens,2)))))
 ```
 The sensitivity d' is 1
 ```
+</div>
 
 
 
@@ -188,9 +202,10 @@ The sensitivity d' is 1
 Response \ Bias =  -\frac{Z(hit \ rate) +  Z(false \ alarm)}{2}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
-  
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
+``` r
 df$c = -((qnorm(df$hit_rate) + qnorm(df$FA_rate)) / 2)
 cat(paste("The response bias c is",format(round(mean(df$c),2))))
 ```
@@ -198,6 +213,7 @@ cat(paste("The response bias c is",format(round(mean(df$c),2))))
 ```
 The response bias c is 0.17
 ```
+</div>
 
 
 ---
@@ -210,9 +226,10 @@ The response bias c is 0.17
 Diagnositicity \ ratio =  \frac{hit \ rate}{false \ alarm \ rate}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704)
-  
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
+``` r
 df$diag = df$hit_rate/df$FA_rate
 cat(paste("The diagnosticity is",format(round(mean(df$diag),2))))
 ```
@@ -220,6 +237,7 @@ cat(paste("The diagnosticity is",format(round(mean(df$diag),2))))
 ```
 The diagnosticity is 3.35
 ```
+</div>
 
 
 
@@ -234,8 +252,9 @@ Positive \ likelihood \ ratio =  \frac{hit \ rate}{1 - false \ alarm \ rate}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704)
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 # positive likelihood ratio
 df$plr <- df$hit_rate/(1-df$FA_rate)
 cat(paste("The PLR is",format(round(mean(df$plr),2))))
@@ -244,6 +263,7 @@ cat(paste("The PLR is",format(round(mean(df$plr),2))))
 ```
 The PLR is 0.87
 ```
+</div>
 
 
 ---
@@ -257,7 +277,9 @@ Negative \ likelihood \ ratio =  \frac{1- hit \ rate}{specificity}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704)
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">s
+
+``` r
 # Negative likelihood ratio
 df$nlr <- (1-df$hit_rate)/df$spec
 cat(paste("The NLR is",format(round(mean(df$nlr),2))))
@@ -266,7 +288,8 @@ cat(paste("The NLR is",format(round(mean(df$nlr),2))))
 ```
 The NLR is 0.47
 ```
-  
+</div>
+
   
 ----
 
@@ -279,7 +302,9 @@ Positive \ predictive \ value =  \frac{H}{H + FA}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 
-```r
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+
+``` r
 # positive likelihood ratio
 df$ppv <- df$hit/(df$hit+df$fa) * 100
 cat(paste("The PPV is",format(round(mean(df$ppv),2))))
@@ -288,6 +313,7 @@ cat(paste("The PPV is",format(round(mean(df$ppv),2))))
 ```
 The PPV is 73.23
 ```
+</div>
 
 
 ---
@@ -301,8 +327,9 @@ Negative \ predictive \ value =  \frac{CR}{CR + M}\\
 \end{align*} 
 [Click here for source of formula](https://doi.org/10.3389/fpubh.2017.00307)
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 # Negative likelihood ratio
 df$nlr <- df$cr/(df$cr+df$miss) * 100
 cat(paste("The NPV is",format(round(mean(df$nlr),2))))
@@ -311,4 +338,5 @@ cat(paste("The NPV is",format(round(mean(df$nlr),2))))
 ```
 ## The NPV is 68.54
 ```
-   
+</div>
+ 

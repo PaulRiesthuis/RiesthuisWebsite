@@ -43,8 +43,10 @@ output:
   - 30 questions
   - hits  with a mean of 2 and a sd of 2.5
   - false alarm with a mean of 10 and sd of 2.5
+  
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 # Create variable.
 set.seed(2794) #  this is too make sure the results stay the same.
 participants <- seq(1,100,1) # This creates a column with 100 participants
@@ -64,6 +66,7 @@ head(df) #  to show the first 5 participants
 5            5  19 11
 6            6  17 13
 ```
+</div>
 
 
 ---
@@ -85,8 +88,9 @@ $$
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 hit_rate <- df$hit/(df$hit+df$FA) # this will give the hit rate for each participant
 cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mean turns the hit rate into the mean for the group
 ```
@@ -94,6 +98,7 @@ cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mea
 ```
 The hit rate is 0.65
 ```
+</div>
 
   
   
@@ -110,8 +115,9 @@ $$
 {{< /math >}}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 
-```r
+``` r
 FA_rate <- df$FA/(df$hit+df$FA) # this will give the FA rate for each participant
 cat(paste("The false alarm rate is",format(round(mean(FA_rate),2))))
 ```
@@ -119,7 +125,8 @@ cat(paste("The false alarm rate is",format(round(mean(FA_rate),2))))
 ```
 The false alarm rate is 0.35
 ```
- 
+</div>
+
  
 ---
 

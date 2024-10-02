@@ -38,6 +38,8 @@ library(rempsyc)
 
 ## Datasets constructed by hand
 - Dataset of Tim
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning = FALSE, message=FALSE}
 old_items_tim <- c(50,50,50,150,500,200)
 new_items_tim <- c(250,250,400,50,25,25)
@@ -47,9 +49,11 @@ nice_table(df_tim,
            title= "Dataset for Tim")
 
 ```
+</div>
 
 - Dataset John
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r}
 old_items_john <- c(50,75,75,500,200,100)
 new_items_john <- c(100,400,300,50,75,75) # changed very strong to 75 instead of 25 to have equal number items between tim and john
@@ -57,6 +61,7 @@ df_john <- data.frame(old_items_john, new_items_john, confidence)
 nice_table(df_john,
            title = "Dataset for John")
 ```
+</div>
 
 
 ---
@@ -67,6 +72,8 @@ nice_table(df_john,
 
 
 - **Tim**
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning = FALSE, message=FALSE}
 #hit rates Tim
 tot_items_tim <- sum(old_items_tim) # to get the total amount of items
@@ -89,7 +96,12 @@ df_tim$far <- c(new_items_tim[1]/tot_new_tim,
 nice_table(df_tim,
            title= "Dataset + Hit and False Alarm rate for Tim")
 ```
+</div>
+
+
 - **John**
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r}
 #hit rates for john
 tot_old_john <- sum(old_items_john)
@@ -111,6 +123,7 @@ df_john$far <- c(new_items_john[1]/tot_new_john,
 nice_table(df_john,
            title= "Dataset + Hit and False Alarm rate for John")
 ```
+</div>
 
 
 ---
@@ -121,7 +134,7 @@ nice_table(df_john,
 
 ---
 
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE,message=FALSE}
 roc_data <- data.frame(df_tim,df_john)
 ggplot(roc_data, aes(x = 1- far, y = 1- hit, color = "Tim")) +
@@ -137,9 +150,12 @@ ggplot(roc_data, aes(x = 1- far, y = 1- hit, color = "Tim")) +
              linetype="dashed")+
   annotate("text", x=.23, y=1, label="10% false positives")
 ```
+</div>
 
 ## ROC Curve via Logistic regression
 - Create datasets for Tim and John that are compatible for logistic regression.
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE, message=FALSE}
 correct_mem <- rep(c(1, 0), each = 1000)
 confidence_tim  <- c(rep(1,50),
@@ -169,6 +185,7 @@ confidence_john  <- c(rep(1,50),
 df <- data.frame(correct_mem,confidence_tim,confidence_john)
 
 ```
+</div>
 
 ---
 
@@ -177,7 +194,7 @@ df <- data.frame(correct_mem,confidence_tim,confidence_john)
 
 ---
 
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE, message=FALSE}
 glm.fit_tim=glm(correct_mem ~ confidence_tim, family=binomial)
 glm.fit_john=glm(correct_mem ~ confidence_john, family=binomial)
@@ -210,6 +227,7 @@ legend("bottomright", legend=c("Tim", "John"),
        col=c("Blue","red"), lwd=2)
 
 ```
+</div>
 
 ---
 
@@ -221,6 +239,8 @@ legend("bottomright", legend=c("Tim", "John"),
 
   - This can be used to examine the blackstone ratio (10:1; false negative to false positive ratio)
   - True and False Positive percentages for each confidence threshold for Tim
+  
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE,message=FALSE}
 info_tim <- roc(correct_mem, glm.fit_tim$fitted.values) 
 tim.df <- data.frame(
@@ -234,11 +254,12 @@ tim.df <- tim.df[-c(1,7), ]
 nice_table(tim.df,
            title="True Positive and False Positive Percentages for each Threshold")
 ```
+</div>
 
 
   - True and False Positive percentages for each confidence threshold for John
 
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE,message=FALSE}
 info_john <- roc(correct_mem, glm.fit_john$fitted.values) 
 john.df <- data.frame(
@@ -252,6 +273,7 @@ john.df <- john.df[-c(1,7), ]
 nice_table(john.df,
            title="True Positive and False Positive Percentages for each Threshold for John")
 ```
+</div>
 
 
 ---
@@ -268,7 +290,7 @@ nice_table(john.df,
   - You can either choose to bootstrap or use the [delong method](https://doi.org/10.1109/LSP.2014.2337313).
   - Using the 95%CI the AUC can be compared to the smallest effect size of interest (e.g., AUC_null = .8).
 
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE,message=FALSE}
 # Delong method
 auc_tim <- roc(correct_mem, glm.fit_tim$fitted.values)
@@ -293,6 +315,7 @@ nice_table(tab_ci,
 )
 
 ```
+</div>
 
 
 ---
@@ -303,7 +326,7 @@ nice_table(tab_ci,
 
 - Preferably, we plot the confidence intervals along the ROC curve to better interpret the results
 
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE, message=FALSE}
 par(pty="s")
 p1 <- roc(correct_mem, glm.fit_tim$fitted.values, 
@@ -339,6 +362,7 @@ p4 <- ci.se(p2,                         # CI of john
 ) 
 plot(p4, type = "shape", col = "red")     # plot as a blue shape
 ```
+</div>
 
 
 
@@ -353,7 +377,7 @@ plot(p4, type = "shape", col = "red")     # plot as a blue shape
   - One example is to calculate the curve for values under the 10% false positive
   - That is because we want to minimize the amount of false positive when it comes to eyewitness identification.
   
-
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning=FALSE,message=FALSE}
 # Calculate the partial AUC
 partial_auc_tim <- roc(correct_mem, glm.fit_tim$fitted.values, partial.auc=c(100,90), percent = T)
@@ -392,4 +416,5 @@ legend("bottomright", legend=c("Tim", "John"),
        col=c("Blue","red"), lwd=2)
 
 ```
+</div>
 

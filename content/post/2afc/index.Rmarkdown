@@ -48,6 +48,8 @@ library(effectsize)
   - 30 questions
   - hits  with a mean of 2 and a sd of 2.5
   - false alarm with a mean of 10 and sd of 2.5
+  
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, comment=NA}
 # Create variable.
 set.seed(2794) #  this is too make sure the results stay the same.
@@ -58,6 +60,7 @@ FA    <- 30-hit # this create a column with the false alarm rates.
 df <- data.frame(participants, hit,FA)
 head(df) #  to show the first 5 participants
 ```
+</div>
 
 
 ---
@@ -79,10 +82,12 @@ $$
 
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, comment=NA}
 hit_rate <- df$hit/(df$hit+df$FA) # this will give the hit rate for each participant
 cat(paste("The hit rate is",format(round(mean(hit_rate),2)))) # The function mean turns the hit rate into the mean for the group
 ```
+</div>
 
   
   
@@ -99,11 +104,13 @@ $$
 {{< /math >}}
 [Click here for source of formula](https://doi.org/10.3758/BF03207704) 
 
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, comment=NA}
 FA_rate <- df$FA/(df$hit+df$FA) # this will give the FA rate for each participant
 cat(paste("The false alarm rate is",format(round(mean(FA_rate),2))))
 ```
- 
+</div>
+
  
 ---
 
