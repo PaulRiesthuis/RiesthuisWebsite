@@ -14,7 +14,7 @@ education:
   - course: B.A. in Psychology
     institution: Grand View University
     year: 2016
-email: "paul.riesthuis@kuleuven.be"
+email: paul.riesthuis@kuleuven.be
 first_name: Paul
 highlight_name: true
 interests:
@@ -29,7 +29,7 @@ role: Post Doctoral Researcher
 social:
 - icon: envelope
   icon_pack: fas
-  link: paul.riesthuis@kuleuven.be
+  link: mailto:paul.riesthuis@kuleuven.be
 - display:
     header: true
   icon: twitter
