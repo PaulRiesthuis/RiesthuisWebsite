@@ -130,7 +130,7 @@ plot(mod_rasch,type= "trace", facet_items=F)
 <div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r}
 # Get item coefficients
-# To get the easy parameters change "IRTpars = F"
+# To get the easy parameter change "IRTpars = F"
 coef(mod_rasch, IRTpars = T, simplify = T)
 ```
 </div>
@@ -144,4 +144,11 @@ coef(mod_rasch, IRTpars = T, simplify = T)
 plot(mod_rasch, type= "infoSE")
 ```
 </div>
+
+### Factor scores
+```{r}
+# Get latent trait scores
+df_irt$fscor <- mirt::fscores(mod_rasch)
+head(df_irt$fscor)
+```
 

@@ -174,7 +174,7 @@ plot(mod_rasch,type= "trace", facet_items=F)
 
 ``` r
 # Get item coefficients
-# To get the easy parameters change "IRTpars = F"
+# To get the easy parameter change "IRTpars = F"
 coef(mod_rasch, IRTpars = T, simplify = T)
 ```
 
@@ -209,4 +209,22 @@ plot(mod_rasch, type= "infoSE")
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 </div>
+
+### Factor scores
+
+``` r
+# Get latent trait scores
+df_irt$fscor <- mirt::fscores(mod_rasch)
+head(df_irt$fscor)
+```
+
+```
+##              F1
+## [1,] 0.06590852
+## [2,] 0.06590852
+## [3,] 0.77109655
+## [4,] 0.06590852
+## [5,] 0.06590852
+## [6,] 0.77109655
+```
 
