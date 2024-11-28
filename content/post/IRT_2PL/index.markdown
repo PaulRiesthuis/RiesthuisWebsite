@@ -22,7 +22,7 @@ output:
 
 
 ## Load Data 
-We will again use the DRM list of the study of Otgaar et al (2020) as in [RASCH model](asda.sda). We will focus on true memory (studied items). 
+We will again use the DRM list of the study of Otgaar et al (2020) as in [RASCH model](https://paul-riesthuis.netlify.app/post/irt-tutorial/). We will focus on true memory (studied items). 
 
 Let's load the data
 
