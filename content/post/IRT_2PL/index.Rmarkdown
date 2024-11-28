@@ -3,12 +3,13 @@ title: "IRT Tutorial 2PL"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
 slug: IRT-tutorial
-categories: []
+categories: 
+  - IRT
 tags: []
 subtitle: ''
 summary: 'In this post, I will show how to conduct a 2PL IRT analysis for data from a DRM study of Otgaar and colleagues'
-lastmod: '2024-09-22T16:22:26+02:00'
-date: "2024-09-25"
+lastmod: '2024-11-28T16:22:26+02:00'
+date: "2024-11-28"
 projects: []
 output: 
   html_document:
