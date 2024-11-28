@@ -1,0 +1,138 @@
+---
+title: "IRT Tutorial 2PL"
+author: 'Paul Riesthuis'
+authors: [Paul Riesthuis]
+slug: IRT-tutorial
+categories: []
+tags: []
+subtitle: ''
+summary: 'In this post, I will show how to conduct a 2PL IRT analysis for data from a DRM study of Otgaar and colleagues'
+lastmod: '2024-09-22T16:22:26+02:00'
+date: "2024-09-25"
+projects: []
+output: 
+  html_document:
+    theme: readable
+    code_folding: hide
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mirt)
+library(dplyr)
+library(tidyverse)
+library(ltm)
+library(shiny)
+library(haven)
+library(psych)
+```
+
+## Load Data 
+We will start with 1 DRM list of the study of Otgaar et al (2020). We will focus on true memory (studied items). 
+
+Let's load the data
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+# Load data
+df <- read_sav("False_Denials_sav_2.sav")
+
+# Create dataframe
+df <- as.data.frame(df)
+```
+</div>
+
+## 2PL Model  
+We will now conduct a 2 parameter logistic model (2PL). A 2PL model  examines:
+- the difficulty (i.e., how good does your memory latent trait have to be to answer the answer correctly) of the items 
+- and well they discriminate (i.e., how well the item discriminates between people with different latent trait levels of memory). 
+
+In other words, it only estimates 2 parameters (2PL).
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, message=FALSE, warning=F}
+# Create subset for 1st list
+df_irt <- df %>% dplyr::select(Table, Sit, Leg, Seat, Couch)
+
+#  First remove first row of NAs
+df_irt <- na.omit(df_irt)
+
+# Conduct Rasch model
+mod_2pl <- mirt(df_irt,1, itemtype = "2PL", verbose=F, SE=T)
+
+# Results
+mod_2pl
+```
+</div>
+
+### Examining fit of individual items
+  - This will provide information on how well the datapoints are distributed along the line.
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+# Examine item fit
+for (i in 1:length(df_irt)){
+  ItemPlot <- itemfit(mod_2pl,
+                      group.bins = 25,
+                      empirical.plot = i,
+                      empirical.CI = .95,
+                      method = "ML")
+  print(ItemPlot)
+}
+```
+</div>
+
+### Plot the individual items - Difficulty and discriminability
+  - Difficulty is given by how high theta (latent trait ability/memory performance) needs to be before endorsing the item (remembering the word)
+  - Discriminability is given by how steep the curve is and thus discriminates between different theta levels. 
+  
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+# Item specific graphs
+plot(mod_2pl, type = "trace")
+
+```
+</div>
+
+### Plot together
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+plot(mod_2pl,type= "trace", facet_items=F)
+
+```
+</div>
+
+
+### Coefficients of difficulty (=b) and discriminability (=a)
+  - easiness parameter = difficulty/discriminability
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+# Get item coefficients
+# To get the easy parameter change "IRTpars = F"
+mirt::coef(mod_2pl, IRTpars = F, simplify = F)
+```
+</div>
+
+### Information of the test
+  - Specifically, this provide a plot at which levels of the latent trait ability the test is most informative
+  - Plotting the standard error also indicates where the standard error is largest for the specific test.
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+plot(mod_2pl, type= "infoSE")
+```
+</div>
+
+### Factor scores
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r}
+# Get latent trait scores
+df_irt$fscor <- mirt::fscores(mod_2pl)
+head(df_irt$fscor)
+```
+</div>
