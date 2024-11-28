@@ -3,7 +3,8 @@ title: "Recognition Memory Analyses"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
 slug: recognition-memory-analyses
-categories: []
+categories: 
+  - ROC
 tags: []
 subtitle: ''
 summary: 'In this post, I introduce the different posts that I will show how to examine various recognition memory tests.'

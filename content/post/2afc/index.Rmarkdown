@@ -3,7 +3,8 @@ title: "2AFC Memory Task Data Analysis"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
 slug: 2AFC-Memory-Task-Data-Analysis
-categories: []
+categories: 
+  - ROC
 tags: []
 subtitle: ''
 summary: 'In this post, I will show the possible statistical analyses possible with a 2 alternative forced choice task in a typical memory experiment.'

@@ -3,7 +3,8 @@ title: "ROC Curve Brady et al. (2022)"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
 slug: roc-curve-brady
-categories: []
+categories:
+  - ROC
 tags: []
 subtitle: ''
 summary: 'In this post, I will conduct the ROC analyses performed in the article of Brady et al. (2022) '

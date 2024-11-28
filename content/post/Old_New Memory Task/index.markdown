@@ -3,7 +3,8 @@ title: "New Old Memory Task Data Analysis"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
 slug: new-old-memory-task-data-analysis
-categories: []
+categories: 
+  - ROC
 tags: []
 subtitle: ''
 summary: 'In this post, I will show the possible statistical analyses possible with a new - old memory task'
