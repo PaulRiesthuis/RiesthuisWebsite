@@ -22,7 +22,7 @@ output:
 
 
 ## Load Data 
-We will start with 1 DRM list of the study of Otgaar et al (2020). We will focus on true memory (studied items). 
+We will again use the 1 DRM list of the study of Otgaar et al (2020). We will focus on true memory (studied items). 
 
 Let's load the data
 
