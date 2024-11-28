@@ -2,7 +2,7 @@
 title: "IRT Tutorial 2PL"
 author: 'Paul Riesthuis'
 authors: [Paul Riesthuis]
-slug: IRT-tutorial
+slug: IRT2PL
 categories: 
   - IRT
 tags: []
@@ -22,7 +22,7 @@ output:
 
 
 ## Load Data 
-We will again use the 1 DRM list of the study of Otgaar et al (2020). We will focus on true memory (studied items). 
+We will again use the DRM list of the study of Otgaar et al (2020) as in [RASCH model](asda.sda). We will focus on true memory (studied items). 
 
 Let's load the data
 
