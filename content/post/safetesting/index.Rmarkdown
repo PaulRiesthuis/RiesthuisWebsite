@@ -218,14 +218,14 @@ ggplot(df_error, aes(x = par))+
 # Provide parameters of interest
 alpha <- 0.05
 beta <- 0.2
-SESOI <- 0.8
-n1 <- 400
-n2 <- 400
+SESOI <- 0.5
+n1 <- 200
+n2 <- 200
 m1 <- 0
 m2 <- 0
 sd1 <- 2
 sd2 <- 2
-nsim <- 1000
+nsim <- 100
 
 designObj <- designSafeT(deltaMin=SESOI, 
                          alpha=alpha, 
@@ -323,7 +323,7 @@ mean(result$ps <.05)
 ```
 </div>
 
-Now type 1 error rate when final p-values are extracted.
+Now type 1 error rate when final p-value is extracted.
 
 <div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
 ```{r, warning = F, message=F}
@@ -448,7 +448,7 @@ ggplot(result, aes(x = dataset))+
 ### Calculate power for normal evalues, minimum-effect testing, and equivalence testing
 
 <div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
-```{r, warning = F, message=F}
+```{r}
 result <- results_df %>%
   group_by(dataset) %>%
   filter(evs == tail(evs,1)) %>%
@@ -469,4 +469,5 @@ power_safe <- data.frame(
 power_safe
 ```
 </div>
+
 
