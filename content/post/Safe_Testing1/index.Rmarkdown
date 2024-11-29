@@ -1,0 +1,472 @@
+---
+title: "Safe Testing"
+author: 'Paul Riesthuis'
+authors: [Paul Riesthuis]
+slug: safetesting
+categories: []
+tags: []
+subtitle: ''
+summary: 'In this post, I will show how to conduct safe tests'
+lastmod: '2024-11-29T16:22:26+02:00'
+date: "2024-11-29"
+projects: []
+output: 
+  html_document:
+    theme: readable
+    code_folding: hide
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(safestats)
+library(ggplot2)
+library(dplyr)
+library(ThemePark)
+library(gganimate)
+```
+
+# Safe Testing
+Safe testing is a statistical analysis that allows researchers to analyze the data at any moment without have to worry about alpha corrections. This means that the researchers can look at their data at any time to see if they found meaningful differences. In this blogpost, I will show how:
+  - safe testing can be conducted in R. 
+  - I will show that it indeed does not lead to an inflated type 1 error rate which is observed in traditional hypothesis significance testing.
+  - I will show how the any time valid confidence sequences can be used.
+  - I will propose a way in how the any time valid confidence sequences can be used as a form of equivalence and minimum-effect testing.
+
+## Safe Testing - Independent sample t-test
+To conduct a safe test for an independent sample t-test we need the following information:
+  - Alpha
+  - Beta
+  - Smallest effect size of interest = SESOI
+
+Using these parameters, we can create a designSafeT which is necessary to obtain the e-values and anytime valid confidence sequences
+### Preparation
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F, echo=F}
+# Indicate parameters
+alpha = .05
+beta = .20 # desired statistical power = .80
+SESOI = .5
+
+designObj <- designSafeT(deltaMin=SESOI, alpha=alpha, beta=beta,
+                         alternative="greater", testType="twoSample")
+```
+</div>
+
+Then we have sufficient information to run the safe t test. 
+
+
+### Create datasets
+Let's create a dataset for a two group experimental between subjects design.
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+# Generate a dataset for each group
+group1 <- rnorm(150,7,2)
+group2 <- rnorm(150,6,2)
+
+# Show first 5 rows
+head(group1)
+head(group2)
+```
+</div>
+
+### Normal independent sample t-test
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+t.test(x=group1, 
+       y=group2, 
+       alternative = "two.sided", 
+       paired=FALSE)
+```
+</div>
+
+This leads to a p-value < .001 and a raw mean difference of 1.1 95%CI[.66, 1.58]
+
+
+### Safe independent sample t-test
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+safeTTest(x=group1, 
+          y=group2, 
+          alternative = "greater",
+          designObj=designObj, 
+          paired=FALSE)
+```
+</div>
+
+There are no p-values for safe tests but e-values. For e-values, a value above 20 (1/.05) is deemed as evidence for the alternative hypothesis. In this case the e-value is 55038 with a raw mean difference of 1.1 and a 95% any time valid confidence sequence [.40, 1.85].
+
+Hence, the results are the same. 
+
+## Examine p-values and e-values sequentially
+Same steps as above but we now conduct the analysis after each participants data comes in. 
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+# create empty columns for extracted data
+evs <- c() # evalues
+ps <- c() # pvalues
+L95 <- c() # 95 any time valid confidence sequence
+H95 <- c() # 95 any time valid confidence sequence
+L95CI <- c() # 95 confidence interval
+H95CI <- c() # 95 confidence interval
+est <- c() # Estimate mean difference
+
+# For loop to conduct analysis after each participant.
+for (i in 2:length(group1)) {
+  set.seed(2)
+  g1 <- head(group1, i)
+  g2 <- head(group2, i)
+  s <- safeTTest(x=g1, y=g2, alternative = "greater",
+            designObj=designObj, paired=FALSE)
+  evs[i] <- s$eValue
+  e <- t.test(x=g1, y=g2, alternative = "two.sided",
+              designObj=designObj, paired=FALSE)
+  ps[i] <- e$p.value
+  L95[i] <- s$confSeq[1]
+  H95[i] <- s$confSeq[2]
+  est[i] <- s$estimate[1] - s$estimate[2]
+  L95CI[i] <- e$conf.int[1]
+  H95CI[i] <- e$conf.int[2]
+}
+
+# Put data together
+df_error <- data.frame(evs, ps,L95,H95,L95CI,H95CI,est)
+
+# Add a participants variable 
+df_error$par <- seq(1,length(g1),1)
+
+# Remove first row of data because they are NAs (no comparisons can be done with only 1 participant)
+df_error <- na.omit(df_error)
+
+# For safe testing there are no anytime valid confidence sequences for the first 5 comparisons/participants per group.
+df_error$L95[!is.finite(df_error$L95)] <- NA # first five comparisons there are no CIs
+df_error$H95[!is.finite(df_error$H95)] <- NA # first five comparisons there are no CIs
+
+# Show first 5 rows
+head(df_error)
+```
+</div>
+
+### Plot p-values
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+ggplot(df_error, aes(x = par, y = ps))+
+  geom_point()+
+  geom_line(color="red")+
+  geom_hline(yintercept= .05, linetype= "dashed", color = "blue", size= 1)+
+  theme_barbie()+
+  labs(y = "p-values",
+       x = "Participants")+
+  transition_reveal(seq_along(par)) + shadow_mark()
+
+
+```
+</div>
+
+
+### Plot e-values
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r,warning = F, message=F}
+ggplot(df_error, aes(x = par, y = evs))+
+  geom_point()+
+  geom_line()+
+  geom_hline(yintercept= 20, linetype= "dashed", color = "red", size= 1)+
+  labs(y = "p-values",
+       x = "Participants")+
+  transition_reveal(seq_along(par)) + shadow_mark()+
+  theme_barbie()
+```
+</div>
+
+### Plot raw mean difference and 95%CI and CS
+  - The lines on the outside reflect the lower and upper any time valid confidence sequences
+  - The next two lines reflect the lower and upper 95%CIs
+  - The middle line is the estimate for the raw mean difference
+  
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+ggplot(df_error, aes(x = par))+
+  geom_point(aes(y = L95))+
+  geom_line(aes(y = L95))+
+  geom_point(aes(y= H95))+
+  geom_line(aes(y = H95))+
+  geom_point(aes(y = L95CI))+
+  geom_line(aes(y = L95CI))+
+  geom_point(aes(y= H95CI))+
+  geom_line(aes(y = H95CI))+
+  geom_point(aes(y = est))+
+  geom_line(aes(y = est))+
+  transition_reveal(seq_along(par)) + shadow_mark()+
+  labs(y = "Raw mean differences",
+       x = "Participants")+
+  theme_barbie()
+```
+</div>
+
+## Type 1 error inflation check
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F, echo = F}
+# Provide parameters of interest
+alpha <- 0.05
+beta <- 0.2
+SESOI <- 0.8
+n1 <- 400
+n2 <- 400
+m1 <- 0
+m2 <- 0
+sd1 <- 2
+sd2 <- 2
+nsim <- 1000
+
+designObj <- designSafeT(deltaMin=SESOI, 
+                         alpha=alpha, 
+                         beta=beta,
+                         alternative="greater", 
+                         testType="twoSample")
+```
+</div>
+
+### Simulate the 1,000 datasets
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+# Create an empty dataframe to store results
+results_df <- data.frame(dataset = integer(),
+                         evs = numeric(),
+                         ps = numeric(),
+                         L95 = numeric(),
+                         H95 = numeric(),
+                         L952 = numeric(),
+                         H952 = numeric(),
+                         est = numeric())
+
+# Perform the process for each dataset
+for (n in 1:nsim) {  # Assuming N is defined somewhere
+  group1 <- rnorm(n1,m1,sd1)
+  group2 <- rnorm(n2,m2,sd2)
+  
+  # Initialize vectors to store evs and ps for this dataset. If varying group sizes, change to max n.
+  evs <- numeric(length(group1) - 1)
+  ps <- numeric(length(group1) - 1)
+  L95 <- numeric(length(group1) - 1)
+  H95 <- numeric(length(group1) -1)
+  L952 <- numeric(length(group1) - 1)
+  H952 <- numeric(length(group1) -1)
+  est <- numeric(length(group1) -1)
+  
+  
+  # Perform the analysis for this dataset
+  for (i in 2:length(group1)) {
+    g1 <- head(group1, i)
+    g2 <- head(group2, i)
+    
+    s <- safeTTest(x=g1, y=g2, alternative = "greater",
+                   designObj=designObj, paired=FALSE)
+    evs[i -1] <- s$eValue # to remove first comparison which cannot be done with only 2 observations
+    
+    e <- t.test(x=g1, y=g2, alternative = "two.sided",
+                designObj=designObj, paired=FALSE)
+    ps[i -1 ] <- e$p.value # to remove first comparison which cannot be done with only 2 observations
+    L95[i-1 ] <- s$confSeq[1]
+    H95[i-1] <- s$confSeq[2]
+    L952[i-1] <- e$conf.int[1]
+    H952[i-1] <- e$conf.int[2]
+    est[i-1] <- s$estimate[1]
+  }
+  
+  # Create a temporary dataframe for this dataset
+  temp_df <- data.frame(dataset = rep(n, length(evs)),
+                        evs = evs,
+                        ps = ps,
+                        L95 = L95,
+                        H95 = H95,
+                        L952 = L952,
+                        H952 = H952,
+                        est = est)
+  
+  # Bind the temporary dataframe to the results dataframe
+  results_df <- rbind(results_df, temp_df)
+}
+
+# Provide first 5 rows
+head(results_df)
+
+```
+</div>
+
+### Type 1 error rate - tradition hypothesis testing
+First check what the type 1 error rate is if researchers stop after the first p-value below .05
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+# Filter each dataset to get either the first p-value below .05 or the last p-value
+result <- results_df %>%
+  group_by(dataset) %>%
+  filter(ps == ifelse(any(ps < .05), head(ps[ps < .05],1), tail(ps, na.rm = TRUE,1))) %>%
+  ungroup()
+
+# Create histogram
+hist(result$ps,breaks=100)
+abline(v=.05,col="red")
+
+# Type 1 error rate
+mean(result$ps <.05)
+```
+</div>
+
+Now type 1 error rate when final p-values are extracted.
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+# Obtain last p-value
+result <- results_df %>%
+  group_by(dataset) %>%
+  summarize(ps = tail(ps, 1)) %>%
+  ungroup()
+
+
+# Create histogram
+hist(result$ps, breaks = 100)
+abline(v=.05,col="red")
+
+# Type 1 error rate
+mean(result$ps < .05)
+```
+</div>
+
+
+### Type 1 error rate - Safe testing
+First check what the type 1 error rate is if researchers stop after the first e-value above 20 or the last e-value
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+# Filter each dataset to get either the first e-value above 20 or the last e-value
+result <- results_df %>%
+  group_by(dataset) %>%
+  filter(evs == ifelse(any(evs > 20), head(evs[evs > 20],1), tail(evs, na.rm = TRUE,1))) %>%
+  ungroup()
+
+# Create histogram
+hist(result$evs, breaks = 100)
+abline(v=20,col="red")
+
+# Type 1 error rate
+mean(result$evs > 20)
+```
+</div>
+
+Only take final evs-value
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+result <- results_df %>%
+  group_by(dataset) %>%
+  summarize(evs = tail(evs, 1)) %>%
+  ungroup()
+
+hist(result$evs, breaks = 100)
+abline(v=20,col="red")
+mean(result$evs > 20, na.rm=T)
+```
+</div>
+
+## Plot estimates of each 95%CIs and CSs when first e-value is extracted
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+result <- results_df %>%
+  group_by(dataset) %>%
+  filter(evs == ifelse(any(evs > 20), head(evs[evs > 20],1), tail(evs, na.rm = TRUE,1))) %>%
+  ungroup()
+
+ggplot(result, aes(x = dataset))+
+  geom_point(aes(y = L95, colour = "green"))+
+  geom_line(aes(y = L95), col = "green")+
+  geom_point(aes(y= H95, colour= "green"))+
+  geom_line(aes(y = H95), col = "green")+
+  geom_point(aes(y = L952, colour="red"))+
+  geom_line(aes(y = L952), col = "red")+
+  geom_point(aes(y= H952, colour="red"))+
+  geom_line(aes(y = H952), col = "red")+
+  geom_point(aes(y = est, colour="blue"))+
+  geom_line(aes(y = est), col = "blue")+
+  scale_colour_manual(values = c("blue", "green", "red"),
+                      name = "Values",   # Change this to your desired legend title
+                      labels = c("Estimate", "95%CS", "95CI")) + # Custom labels
+  labs(title = "Estimates and 95% Confidence Intervals and Sequences",  # Change this to your desired plot title
+       x = "Dataset",                     # Custom x-axis label
+       y = "Raw mean differences") +                     # Custom y-axis label
+  scale_x_continuous(breaks = seq(0,1000,50),expand = expansion(mult = c(0, 0.05))) +
+  scale_y_continuous(breaks = seq(-2,7,.5)) +
+  transition_reveal(seq_along(dataset)) + shadow_mark()+
+  theme_barbie()
+```
+</div>
+
+## Plot estimates of each 95%CIs and CSs when last e-value is extracted
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+result <- results_df %>%
+  group_by(dataset) %>%
+  filter(evs == tail(evs,1)) %>%
+  ungroup()
+
+ggplot(result, aes(x = dataset))+
+  geom_point(aes(y = L95, colour = "green"))+
+  geom_line(aes(y = L95), col = "green")+
+  geom_point(aes(y= H95, colour= "green"))+
+  geom_line(aes(y = H95), col = "green")+
+  geom_point(aes(y = L952, colour="red"))+
+  geom_line(aes(y = L952), col = "red")+
+  geom_point(aes(y= H952, colour="red"))+
+  geom_line(aes(y = H952), col = "red")+
+  geom_point(aes(y = est, colour="blue"))+
+  geom_line(aes(y = est), col = "blue")+
+  scale_colour_manual(values = c("blue", "green", "red"),
+                      name = "Values",   # Change this to your desired legend title
+                      labels = c("Estimate", "95%CS", "95CI")) + # Custom labels
+  labs(title = "Estimates and 95% Confidence Intervals and Sequences",  # Change this to your desired plot title
+       x = "Dataset",                     # Custom x-axis label
+       y = "Raw mean differences") +                     # Custom y-axis label
+  scale_x_continuous(breaks = seq(0,1000,50),expand = expansion(mult = c(0, 0.05))) +
+  scale_y_continuous(breaks = seq(-2,7,.5)) +
+  transition_reveal(seq_along(dataset)) + shadow_mark()+
+  theme_barbie()
+```
+</div>
+
+### Calculate power for normal evalues, minimum-effect testing, and equivalence testing
+
+<div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+```{r, warning = F, message=F}
+result <- results_df %>%
+  group_by(dataset) %>%
+  filter(evs == tail(evs,1)) %>%
+  ungroup()
+
+power_normal <- data.frame(
+  "NHST" = mean(result$ps < .05, na.rm=T),
+  "ET" = mean(result$L952 > -SESOI & result$H952 < SESOI, na.rm=T),
+  "ME" = mean(result$L952 > SESOI | result$H952 < - SESOI, na.rm=T))
+
+power_normal
+
+power_safe <- data.frame(
+  "NHST" = mean(result$evs > 20, na.rm=T),
+  "ET" = mean(result$L95 > -SESOI & result$H95 < SESOI, na.rm=T),
+  "ME" = mean(result$L95 > SESOI | result$H95 < - SESOI, na.rm=T))
+
+power_safe
+```
+</div>
+
