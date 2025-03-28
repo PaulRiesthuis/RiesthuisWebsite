@@ -8,7 +8,7 @@ authors:
 - Henry Otgaar
 #date: "2024-25-07T00:00:00Z"
 doi: "https://doi.org/10.1108/JCP-04-2024-0031"
-featured: true
+featured: false
 projects: []
 publication: '*Journal of Criminal Psychology*'
 publication_short: ""
