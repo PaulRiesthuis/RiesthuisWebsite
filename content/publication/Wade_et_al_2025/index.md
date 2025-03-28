@@ -12,7 +12,7 @@ authors:
 - Charlotte Bücken
 - Henry Otgaar
 - Elizabeth Loftus
-#date: "2025-24-01T00:00:00Z"
+#date: "2025-01-24T00:00:00Z"
 doi: "https://doi.org/10.1002/acp.70028"
 featured: false
 projects: []
@@ -20,7 +20,7 @@ publication: '*Applied Cognitive Psychology*'
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2025-24-01T00:00:00Z"
+publishDate: "2025-01-24T00:00:00Z"
 tags:
 - Source Themes
 title: "Still Lost in the Mall—False Memories Happen and That's What Matters"
