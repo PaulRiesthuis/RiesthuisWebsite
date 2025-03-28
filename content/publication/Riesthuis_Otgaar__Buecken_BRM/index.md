@@ -8,7 +8,7 @@ authors:
 - admin
 - Henry Otgaar
 - Charlotte Bücken
-#date: "2025-05-03T00:00:00Z"
+#date: "2025-03-05T00:00:00Z"
 doi: "https://doi.org/10.3758/s13428-025-02646-x"
 featured: true
 projects: []
@@ -16,7 +16,7 @@ publication: '*Behavior Research Methods*'
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2025-05-03T00:00:00Z"
+publishDate: "2025-03-05T00:00:00Z"
 tags:
 - Source Themes
 title: "Ready to ROC? A Tutorial on Simulation-Based Power Analyses for Null Hypothesis Significance, Minimum-Effect, and Equivalence Testing for ROC Curve Analyses"
