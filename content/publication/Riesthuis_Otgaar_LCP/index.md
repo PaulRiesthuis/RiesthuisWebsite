@@ -6,7 +6,7 @@ author_notes:
 authors:
 - admin
 - Henry Otgaar
-#date: "2024-04-11T00:00:00Z"
+#date: "2024-11-04T00:00:00Z"
 doi: "https://doi.org/10.1111/lcrp.12300"
 featured: false
 projects: []
@@ -14,7 +14,7 @@ publication: '*Legal and Criminological Psychology*'
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2024-04-11T00:00:00Z"
+publishDate: "2024-11-04T00:00:00Z"
 tags:
 - Source Themes
 title: "On the use of receiver operating characteristic area under the curve in eyewitness memory research"
