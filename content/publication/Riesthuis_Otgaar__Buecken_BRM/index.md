@@ -10,7 +10,7 @@ authors:
 - Charlotte Bücken
 #date: "2025-03-05T00:00:00Z"
 doi: "https://doi.org/10.3758/s13428-025-02646-x"
-featured: true
+featured: false
 projects: []
 publication: '*Behavior Research Methods*'
 publication_short: ""
