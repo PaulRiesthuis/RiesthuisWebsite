@@ -32,10 +32,6 @@ social:
   link: mailto:paul.riesthuis@kuleuven.be
 - display:
     header: true
-  icon: twitter
-  icon_pack: fab
-  label: Follow me on Twitter
-  link: https://twitter.com/PaulRiesthuis
 - icon: researchgate
   icon_pack: fab
   link: https://www.researchgate.net/profile/Paul-Riesthuis-2 
