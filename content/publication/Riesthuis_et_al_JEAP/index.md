@@ -19,7 +19,7 @@ authors:
 - Driek Deferme
 - Henry Otgaar
 #date: "2025-06-05T00:00:00Z"
-doi: "https://www.researchgate.net/publication/393159586_Through_the_Lens_of_Legal_Professionals_Examining_the_Smallest_Effect_Size_of_Interest_for_Eyewitness_Memory_Research"
+doi: "10.1177/13657127251357630"
 featured: true
 projects: []
 publication: '*International Journal of Evidence and Proof*'
