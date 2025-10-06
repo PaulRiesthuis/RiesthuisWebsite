@@ -12,15 +12,15 @@ authors:
 - Tery Setiawan
 - Nathanael Sumampouw
 - Charlotte Bücken
-#date: "2025-09-19T00:00:00Z"
-doi: "https://doi.org/10.7454/proust.v8i2.1204""
+#date: "2025-09-09T00:00:00Z"
+doi: "https://doi.org/10.7454/proust.v8i2.1204"
 featured: false
 projects: []
 publication: '*Psychological Research on Urban Society*'
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2025-09-19T00:00:00Z"
+publishDate: "2025-09-09T00:00:00Z"
 tags:
 - Source Themes
 title: "From p-Values to Practical Relevance: An Introduction to Effect Sizes Through a Legal Psychological Example"
